@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalInput;
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
+    public float playerHealth = 20f;
+    public GameObject Weapon;
+    public bool Attacking;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,15 +37,37 @@ public class PlayerMovement : MonoBehaviour
             gameObject.SetActive(false);
         }
 
+        if (playerHealth < 0)
+        {
+            gameObject.SetActive(false);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            StartCoroutine(PlayerAttackCountdownRoutine());
+
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            //this is the damage that the enemie will do to the player when they collide. 
-            Destroy(other.gameObject);
+            if (Attacking = false){
+                playerHealth = -10;
+            }
 
         }
+    }
+
+    IEnumerator PlayerAttackCountdownRoutine()
+    {
+        Weapon.SetActive(true);
+        Attacking = true;
+        yield return new WaitForSeconds(1);
+        Weapon.SetActive(false);
+        Attacking = false;
     }
 }

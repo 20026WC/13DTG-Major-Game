@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyControl : MonoBehaviour
 {
+    public float speed = 2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,7 @@ public class EnemyControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * 800);
+        transform.Translate(Vector3.right * Time.deltaTime * speed);
 
         if (transform.position.x > -12)
         {
@@ -27,4 +28,15 @@ public class EnemyControl : MonoBehaviour
             transform.position = new Vector3(transform.position.x, -4, 0);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Weapon"))
+        {
+            //this is the damage that the enemie will do to the player when they collide. 
+            Destroy(gameObject);
+
+        }
+    }
+
 }
