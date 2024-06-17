@@ -1,34 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Permissions;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody playerRb;
+    Rigidbody2D playerRb;
 
     public float jumpForce;
     public float horizontalInput;
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
-    public float playerHealth = 20f;
+
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
+
     public GameObject Weapon;
     public bool Attacking;
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+        playerRb = gameObject.GetComponent<Rigidbody2D>();
         Physics.gravity *= gravityModifier;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal") * speed;
-        transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+        transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed);
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
         }
 
@@ -37,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
             gameObject.SetActive(false);
         }
 
-        if (playerHealth < 0)
+        if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
@@ -51,14 +60,20 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+    void Damage(int damage)
+    {
+        //This is the code for damage is minused form the player's health. 
+        currentHealth -= damage;
+        healthBar.SetHealth(currentHealth);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            if (Attacking = false){
-                playerHealth = -10;
-            }
-
+            Damage(10);
+           
         }
     }
 
