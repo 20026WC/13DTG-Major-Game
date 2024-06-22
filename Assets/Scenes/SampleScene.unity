@@ -897,6 +897,7 @@ MonoBehaviour:
   healthBar: {fileID: 2112123214}
   Weapon: {fileID: 1098004452}
   Attacking: 0
+  lookingleft: 1
 --- !u!50 &1067917757
 Rigidbody2D:
   serializedVersion: 4

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Security.Permissions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject Weapon;
     public bool Attacking;
+    public bool lookingleft = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,17 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxis("Horizontal") * speed;
         transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed);
+
+        if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
+        {
+            transform.Rotate(0f, 180f, 0f);
+            lookingleft = true;
+        }
+        if (Input.GetKeyDown(KeyCode.D) && lookingleft)
+        {
+            transform.Rotate(0f, -180f, 0f);
+            lookingleft = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
