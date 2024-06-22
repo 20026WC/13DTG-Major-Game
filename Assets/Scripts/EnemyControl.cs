@@ -25,6 +25,7 @@ public class EnemyControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Weapon"))
         {
+            // Gets destroyed if it touches the player's weapon.
             Destroy(gameObject);
 
         }

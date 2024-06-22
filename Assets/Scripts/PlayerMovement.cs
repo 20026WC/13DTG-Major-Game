@@ -34,48 +34,55 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal") * speed;
-        transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed);
+        horizontalInput = Input.GetAxis("Horizontal");
+        // Space.world ignores the object's rotation and keeps the player moving in the same direction.
+        transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
 
+        // If the player is not looking left and pushes A they are rotated to the left.
         if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
         {
             transform.Rotate(0f, 180f, 0f);
             lookingleft = true;
         }
+
+        // If the player is looking left and pushes D they are rotated to the right.
         if (Input.GetKeyDown(KeyCode.D) && lookingleft)
         {
             transform.Rotate(0f, -180f, 0f);
             lookingleft = false;
         }
 
+        // Code for the playere to jump when space is pressed. 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
         }
 
+        // This kills the player if they reach a higght below -20.
         if (transform.position.y < -20)
         {
             gameObject.SetActive(false);
         }
 
+        // Takes player out when heath gets to 0. 
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
         }
 
-
+        // Summons sword when player presses the left mouse key. 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            // Starts countdown for when to despawn sword
             StartCoroutine(PlayerAttackCountdownRoutine());
-
         }
 
     }
 
     void Damage(int damage)
     {
-        //This is the code for damage is minused form the player's health. 
+        //This is the code minuses damage from the player's health. 
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
@@ -85,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            // Tells the program to take 1o from player's health.
             Damage(10);
            
         }
@@ -94,6 +102,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Weapon.SetActive(true);
         Attacking = true;
+        // Allows sowrd to be active for a second.
         yield return new WaitForSeconds(1);
         Weapon.SetActive(false);
         Attacking = false;
