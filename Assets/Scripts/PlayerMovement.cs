@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalInput;
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
+    private float powerupStrength = 200000000;
 
     public int maxHealth = 100;
     public int currentHealth;
@@ -95,6 +96,16 @@ public class PlayerMovement : MonoBehaviour
             // Tells the program to take 1o from player's health.
             Damage(10);
            
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Rigidbody2D enemyRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            Vector2 direction = (transform.position - collision.gameObject.transform.position).normalized;
+            enemyRb.AddForce(direction * powerupStrength, ForceMode2D.Impulse);
         }
     }
 

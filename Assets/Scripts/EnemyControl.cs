@@ -7,6 +7,7 @@ public class EnemyControl : MonoBehaviour
 {
     Rigidbody2D enemyRb;
     public float speed;
+    public float enemyHealth = 20;
     private GameObject player;
 
     void Start()
@@ -19,6 +20,12 @@ public class EnemyControl : MonoBehaviour
     {
         Vector2 lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * speed);
+
+        if (enemyHealth < 0)
+        {
+            Destroy(gameObject);
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -26,7 +33,7 @@ public class EnemyControl : MonoBehaviour
         if (other.gameObject.CompareTag("Weapon"))
         {
             // Gets destroyed if it touches the player's weapon.
-            Destroy(gameObject);
+            enemyHealth -= 10;
 
         }
     }
