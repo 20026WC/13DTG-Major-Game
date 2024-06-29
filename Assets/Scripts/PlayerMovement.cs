@@ -20,12 +20,18 @@ public class PlayerMovement : MonoBehaviour
     public HealthBar healthBar;
 
     public GameObject Weapon;
+    private GameObject Spawn;
+
     public bool Attacking;
     public bool lookingleft = true;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
+
+        Spawn = GameObject.Find("SpawnPoint");
+        gameObject.transform.position = Spawn.transform.position;
+
         Physics.gravity *= gravityModifier;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
@@ -38,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         // Space.world ignores the object's rotation and keeps the player moving in the same direction.
         transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
+
 
         // If the player is not looking left and pushes A they are rotated to the left.
         if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
