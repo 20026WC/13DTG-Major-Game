@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject Spawn;
 
     public bool Attacking;
+    public bool GameIsActive;
     public bool lookingleft = true;
     // Start is called before the first frame update
     void Start()
@@ -36,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+
+        GameIsActive = true;
     }
 
     // Update is called once per frame
@@ -68,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // This kills the player if they reach a higght below -20.
-        if (transform.position.y < -20)
+        if (transform.position.y < -70)
         {
             gameObject.SetActive(false);
         }
