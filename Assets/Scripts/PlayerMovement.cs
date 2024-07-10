@@ -21,22 +21,23 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject Weapon;
     private GameObject Spawn;
+    private RandomisedScript RandomisedScript;
 
     public bool Attacking;
     public bool GameIsActive;
+    public bool Spawned;
     public bool lookingleft = true;
     // Start is called before the first frame update
     void Start()
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
-
-        Spawn = GameObject.Find("SpawnPoint");
-        gameObject.transform.position = Spawn.transform.position;
-
+        RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
+        PlayerSpawnPoint();
         Physics.gravity *= gravityModifier;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+        Spawned = false;
 
         GameIsActive = true;
     }
@@ -44,49 +45,61 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        // Space.world ignores the object's rotation and keeps the player moving in the same direction.
-        transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
-
-
-        // If the player is not looking left and pushes A they are rotated to the left.
-        if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
+        if (GameIsActive)
         {
-            transform.Rotate(0f, 180f, 0f);
-            lookingleft = true;
-        }
+            horizontalInput = Input.GetAxis("Horizontal");
+            // Space.world ignores the object's rotation and keeps the player moving in the same direction.
+            transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
 
-        // If the player is looking left and pushes D they are rotated to the right.
-        if (Input.GetKeyDown(KeyCode.D) && lookingleft)
-        {
-            transform.Rotate(0f, -180f, 0f);
-            lookingleft = false;
-        }
 
-        // Code for the playere to jump when space is pressed. 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            // If the player is not looking left and pushes A they are rotated to the left.
+            if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
+            {
+                transform.Rotate(0f, 180f, 0f);
+                lookingleft = true;
+            }
 
-        }
+            // If the player is looking left and pushes D they are rotated to the right.
+            if (Input.GetKeyDown(KeyCode.D) && lookingleft)
+            {
+                transform.Rotate(0f, -180f, 0f);
+                lookingleft = false;
+            }
 
-        // This kills the player if they reach a higght below -20.
-        if (transform.position.y < -70)
-        {
-            gameObject.SetActive(false);
-        }
 
-        // Takes player out when heath gets to 0. 
-        if (currentHealth <= 0)
-        {
-            gameObject.SetActive(false);
-        }
+            // Summons sword when player presses the left mouse key. 
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                // Starts countdown for when to despawn sword
+                StartCoroutine(PlayerAttackCountdownRoutine());
+            }
 
-        // Summons sword when player presses the left mouse key. 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            // Starts countdown for when to despawn sword
-            StartCoroutine(PlayerAttackCountdownRoutine());
+            // Code for the playere to jump when space is pressed. 
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+            }
+
+
+            // This kills the player if they reach a higght below -20.
+            if (transform.position.y < -70)
+            {
+                gameObject.SetActive(false);
+            }
+
+            // Takes player out when heath gets to 0. 
+            if (currentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+
+            if ((RandomisedScript.TeleportPlayer = true) && !Spawned)
+            {
+                Spawned = true;
+                PlayerSpawnPoint();
+                
+            }
         }
 
     }
@@ -98,14 +111,18 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
+    void PlayerSpawnPoint()
+    {
+        Spawn = GameObject.Find("SpawnPoint");
+        gameObject.transform.position = Spawn.transform.position;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && !Attacking)
         {
             // Tells the program to take 1o from player's health.
-            Damage(10);
-           
+            Damage(10);         
         }
     }
 

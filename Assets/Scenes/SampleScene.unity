@@ -173,6 +173,7 @@ MonoBehaviour:
   level1: {fileID: 810018628}
   level2: {fileID: 723872196}
   level3: {fileID: 1252899316}
+  TeleportPlayer: 1
 --- !u!1 &237560490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1485,7 @@ MonoBehaviour:
   Weapon: {fileID: 1098004452}
   Attacking: 0
   GameIsActive: 0
+  Spawned: 0
   lookingleft: 1
 --- !u!50 &1067917757
 Rigidbody2D:
