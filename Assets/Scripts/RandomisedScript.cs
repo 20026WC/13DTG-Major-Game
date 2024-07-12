@@ -9,9 +9,20 @@ public class RandomisedScript : MonoBehaviour
     public GameObject level3;
     public bool TeleportPlayer;
 
+    private PlayerMovement PlayerMovement;
+
     void Start()
     {
-        RandomNumber();
+        PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        
+    }
+
+    void Update()
+    {
+        if (PlayerMovement.GameIsActive == true)
+        {
+            RandomNumber();
+        }
     }
 
     public void RandomNumber()

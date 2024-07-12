@@ -32,14 +32,6 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
-        PlayerSpawnPoint();
-        Physics.gravity *= gravityModifier;
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        currentHealth = maxHealth;
-        Spawned = false;
-
-        GameIsActive = true;
     }
 
     // Update is called once per frame
@@ -82,17 +74,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
 
-            // This kills the player if they reach a higght below -20.
-            if (transform.position.y < -70)
-            {
-                gameObject.SetActive(false);
-            }
-
-            // Takes player out when heath gets to 0. 
-            if (currentHealth <= 0)
-            {
-                gameObject.SetActive(false);
-            }
 
             if ((RandomisedScript.TeleportPlayer = true) && !Spawned)
             {
@@ -100,6 +81,19 @@ public class PlayerMovement : MonoBehaviour
                 PlayerSpawnPoint();
                 
             }
+        }
+
+        // This kills the player if they reach a higght below -20.
+
+        // Takes player out when heath gets to 0. 
+        if (currentHealth <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (transform.position.y < -70)
+        {
+            currentHealth -= maxHealth;
         }
 
     }
@@ -124,6 +118,22 @@ public class PlayerMovement : MonoBehaviour
             // Tells the program to take 1o from player's health.
             Damage(10);         
         }
+    }
+
+    public void startGame()
+    {
+        PlayerSpawnPoint();
+        Physics.gravity *= gravityModifier;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
+        Spawned = false;
+        gameObject.SetActive(true);
+    }
+
+    public void beginAcent()
+    {
+        GameIsActive = true;
     }
 
     private void OnCollisionEnter(Collision collision)
