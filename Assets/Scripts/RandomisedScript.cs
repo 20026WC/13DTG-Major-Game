@@ -17,13 +17,6 @@ public class RandomisedScript : MonoBehaviour
         
     }
 
-    void Update()
-    {
-        if (PlayerMovement.GameIsActive == true)
-        {
-            RandomNumber();
-        }
-    }
 
     public void RandomNumber()
     {

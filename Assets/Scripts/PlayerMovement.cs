@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Security.Permissions;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public GameObject basespawn;
 
     public GameObject Weapon;
     private GameObject Spawn;
@@ -25,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Attacking;
     public bool GameIsActive;
+    public bool AcentIsActive;
     public bool Spawned;
     public bool lookingleft = true;
     // Start is called before the first frame update
@@ -32,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
+        GameIsActive = true;
     }
 
     // Update is called once per frame
@@ -73,6 +77,18 @@ public class PlayerMovement : MonoBehaviour
 
             }
 
+            // This kills the player if they reach a higght below -20.
+
+            // Takes player out when heath gets to 0. 
+            if (currentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+            }
+
+            if (transform.position.y < -70)
+            {
+                currentHealth -= maxHealth;
+            }
 
 
             if ((RandomisedScript.TeleportPlayer = true) && !Spawned)
@@ -83,18 +99,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        // This kills the player if they reach a higght below -20.
-
-        // Takes player out when heath gets to 0. 
-        if (currentHealth <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-
-        if (transform.position.y < -70)
-        {
-            currentHealth -= maxHealth;
-        }
 
     }
 
@@ -104,6 +108,20 @@ public class PlayerMovement : MonoBehaviour
         currentHealth -= damage;
         healthBar.SetHealth(currentHealth);
     }
+
+    public void startGame()
+    {
+        PlayerSpawnPoint();
+        Physics.gravity *= gravityModifier;
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        currentHealth = maxHealth;
+        Spawned = false;
+        gameObject.SetActive(true);
+ 
+    }
+
+
 
     void PlayerSpawnPoint()
     {
@@ -118,22 +136,13 @@ public class PlayerMovement : MonoBehaviour
             // Tells the program to take 1o from player's health.
             Damage(10);         
         }
-    }
 
-    public void startGame()
-    {
-        PlayerSpawnPoint();
-        Physics.gravity *= gravityModifier;
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        currentHealth = maxHealth;
-        Spawned = false;
-        gameObject.SetActive(true);
-    }
-
-    public void beginAcent()
-    {
-        GameIsActive = true;
+        if (other.gameObject.CompareTag("AcentBeginner"))
+        {
+            startGame();
+            AcentIsActive = true;
+            basespawn.SetActive(false);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

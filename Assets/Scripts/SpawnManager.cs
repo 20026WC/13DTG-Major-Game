@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (PlayerMovement.GameIsActive == true)
+        if (PlayerMovement.AcentIsActive == true)
         {
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             if (enemyCount == 0) 
