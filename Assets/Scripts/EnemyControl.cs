@@ -9,11 +9,13 @@ public class EnemyControl : MonoBehaviour
     public float speed;
     public float enemyHealth = 20;
     private GameObject player;
+    private PlayerMovement PlayerMovement;
 
     void Start()
     {
         enemyRb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
+        PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
     void Update()
@@ -25,6 +27,11 @@ public class EnemyControl : MonoBehaviour
         {
             Destroy(gameObject);
 
+        }
+
+        if (PlayerMovement.AcentIsActive == false)
+        {
+            Destroy(gameObject);
         }
 
         if (transform.position.y < -70)

@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public bool AcentIsActive;
     public bool Spawned;
     public bool lookingleft = true;
+    public bool isOnGround = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +49,13 @@ public class PlayerMovement : MonoBehaviour
             // Space.world ignores the object's rotation and keeps the player moving in the same direction.
             transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
 
+            // Code for the playere to jump when space is pressed. 
+            if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+            {
+                playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                isOnGround = false;
 
+            } 
             // If the player is not looking left and pushes A they are rotated to the left.
             if (Input.GetKeyDown(KeyCode.A) && !lookingleft)
             {
@@ -70,12 +78,6 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(PlayerAttackCountdownRoutine());
             }
 
-            // Code for the playere to jump when space is pressed. 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-
-            }
 
             // This kills the player if they reach a higght below -20.
 
@@ -83,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
             if (currentHealth <= 0)
             {
                 gameObject.SetActive(false);
+
             }
 
             if (transform.position.y < -70)
@@ -117,8 +120,10 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
         Spawned = false;
+        AcentIsActive = false;
         gameObject.SetActive(true);
- 
+        basespawn.SetActive(true);
+
     }
 
 

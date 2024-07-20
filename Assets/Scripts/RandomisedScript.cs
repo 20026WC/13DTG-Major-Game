@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RandomisedScript : MonoBehaviour
 {
+    public GameObject levels;
     public GameObject level1;
     public GameObject level2;
     public GameObject level3;
@@ -17,6 +18,12 @@ public class RandomisedScript : MonoBehaviour
         
     }
 
+    public void StartofGame()
+    {
+        level1.SetActive(false);
+        level2.SetActive(false);
+        level3.SetActive(false);
+    }
 
     public void RandomNumber()
     {
