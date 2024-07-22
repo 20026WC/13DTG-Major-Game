@@ -19,9 +19,10 @@ public class PlayerMovement : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    
     public GameObject basespawn;
-
     public GameObject Weapon;
+    public GameObject GameOver;
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
 
@@ -84,13 +85,16 @@ public class PlayerMovement : MonoBehaviour
             // Takes player out when heath gets to 0. 
             if (currentHealth <= 0)
             {
-                gameObject.SetActive(false);
-
+                Death();
+            }
+            else
+            {
+                GameOver.SetActive(false);
             }
 
             if (transform.position.y < -70)
             {
-                currentHealth -= maxHealth;
+                Death();
             }
 
 
@@ -112,6 +116,13 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
+
+    public void Death()
+    {
+        currentHealth -= maxHealth;
+        gameObject.SetActive(false);
+        GameOver.SetActive(true);
+    }
     public void startGame()
     {
         PlayerSpawnPoint();
