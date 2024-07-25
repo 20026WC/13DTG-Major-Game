@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public bool GameIsActive;
     public bool AcentIsActive;
     public bool Spawned;
+    public bool Shopping;
     public bool lookingleft = true;
     public bool isOnGround = true;
 
@@ -158,6 +159,15 @@ public class PlayerMovement : MonoBehaviour
             startGame();
             AcentIsActive = true;
             basespawn.SetActive(false);
+        }
+
+        if (other.gameObject.CompareTag("Shop"))
+        {
+            Shopping = true;
+        }
+        else
+        {
+            Shopping = false;
         }
     }
 

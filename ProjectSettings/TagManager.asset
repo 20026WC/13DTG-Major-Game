@@ -9,6 +9,7 @@ TagManager:
   - SpawnPoint
   - EnemySpawn
   - AcentBeginner
+  - Shop
   layers:
   - Default
   - TransparentFX
