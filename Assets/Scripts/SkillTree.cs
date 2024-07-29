@@ -17,6 +17,9 @@ public class SkillTree : MonoBehaviour
     public List<Skill> SkillList;
     public GameObject SkillHolder;
 
+    public List<GameObject> ConnectorList;
+    public GameObject ConnectorHolder;
+
     public int SkillPoints;
 
     private void Start()
@@ -38,8 +41,12 @@ public class SkillTree : MonoBehaviour
         };
 
         foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);
+        foreach (var connector in ConnectorHolder.GetComponentsInChildren<RectTransform>()) ConnectorList.Add(connector.gameObject);
 
         for (var i = 0; i < SkillList.Count; i++) SkillList[i].id = i;
+
+        SkillList[0].ConnectedSkills = new[] { 1, 2, 3 };
+        SkillList[2].ConnectedSkills = new[] { 4, 5 };
 
         UpdateAllSkillUI();
     }

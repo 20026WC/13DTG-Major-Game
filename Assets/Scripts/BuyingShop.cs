@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class BuyingShop : MonoBehaviour
 {
-    public GameObject Heath;
-    public GameObject Attack;
+    public GameObject SkillTree;
     private PlayerMovement PlayerMovement;
     // Start is called before the first frame update
     void Start()
@@ -18,8 +17,7 @@ public class BuyingShop : MonoBehaviour
     {
         if (PlayerMovement.Shopping == true)
         {
-            Attack.SetActive(true);
-            Heath.SetActive(true);
+            SkillTree.SetActive(true);
         }
     }
 }
