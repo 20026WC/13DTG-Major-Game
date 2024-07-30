@@ -19,5 +19,7 @@ public class BuyingShop : MonoBehaviour
         {
             SkillTree.SetActive(true);
         }
+        else
+        { SkillTree.SetActive(false); }
     }
 }

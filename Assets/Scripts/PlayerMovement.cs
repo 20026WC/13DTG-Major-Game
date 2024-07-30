@@ -30,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public bool GameIsActive;
     public bool AcentIsActive;
     public bool Spawned;
-    public bool Shopping;
+    public bool Shopping; 
+    public bool beginShopping;
     public bool lookingleft = true;
     public bool isOnGround = true;
 
@@ -72,6 +73,10 @@ public class PlayerMovement : MonoBehaviour
                 lookingleft = false;
             }
 
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ShoppingforUpgrades();
+            }
 
             // Summons sword when player presses the left mouse key. 
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -138,7 +143,17 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-
+    public void ShoppingforUpgrades()
+    {
+        if (beginShopping && Shopping) 
+        { 
+            Shopping = false;
+        }
+        else if (beginShopping && !Shopping)
+        {
+            Shopping = true;
+        }
+    }
 
     void PlayerSpawnPoint()
     {
@@ -163,11 +178,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Shop"))
         {
-            Shopping = true;
+            beginShopping = true;
         }
-        else
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+
+        if (other.gameObject.CompareTag("Shop"))
         {
-            Shopping = false;
+            beginShopping = false;
         }
     }
 

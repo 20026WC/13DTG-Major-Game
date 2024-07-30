@@ -3245,6 +3245,7 @@ MonoBehaviour:
   AcentIsActive: 0
   Spawned: 0
   Shopping: 0
+  beginShopping: 0
   lookingleft: 1
   isOnGround: 1
 --- !u!50 &1067917757
