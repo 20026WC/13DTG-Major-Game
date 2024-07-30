@@ -30,7 +30,8 @@ public class PlayerMovement : MonoBehaviour
     public bool GameIsActive;
     public bool AcentIsActive;
     public bool Spawned;
-    public bool Shopping; 
+    public bool Shopping;
+    public bool PlayerPaused;
     public bool beginShopping;
     public bool lookingleft = true;
     public bool isOnGround = true;
@@ -48,9 +49,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameIsActive)
         {
-            horizontalInput = Input.GetAxis("Horizontal");
-            // Space.world ignores the object's rotation and keeps the player moving in the same direction.
-            transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
+            if (!PlayerPaused) 
+            {
+                horizontalInput = Input.GetAxis("Horizontal");
+                // Space.world ignores the object's rotation and keeps the player moving in the same direction.
+                transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
+            }
+
 
             // Code for the playere to jump when space is pressed. 
             if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
@@ -136,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+        PlayerPaused = false;
         Spawned = false;
         AcentIsActive = false;
         gameObject.SetActive(true);
@@ -148,10 +154,13 @@ public class PlayerMovement : MonoBehaviour
         if (beginShopping && Shopping) 
         { 
             Shopping = false;
+            PlayerPaused = false;
+            
         }
         else if (beginShopping && !Shopping)
         {
             Shopping = true;
+            PlayerPaused = true;
         }
     }
 
