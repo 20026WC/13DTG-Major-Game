@@ -26,7 +26,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject basespawn;
     public GameObject Weapon;
     public GameObject GameOver;
+    
     public Button NewAdventureButton;
+    public Button StartGameButton;
+
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
 
@@ -45,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
-        GameIsActive = true;
+        StartGameButton.gameObject.SetActive(true);  
     }
 
     // Update is called once per frame
@@ -148,11 +151,13 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+        GameIsActive = true;
         PlayerPaused = false;
         Spawned = false;
         AcentIsActive = false;
         gameObject.SetActive(true);
         basespawn.SetActive(true);
+        StartGameButton.gameObject.SetActive(false);
 
     }
 
