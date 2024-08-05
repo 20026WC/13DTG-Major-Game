@@ -26,6 +26,7 @@ public class EnemyControl : MonoBehaviour
         if (enemyHealth < 0)
         {
             Destroy(gameObject);
+            PlayerMovement.PlayerSkillPoints += 10;
 
         }
 

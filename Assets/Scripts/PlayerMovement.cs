@@ -5,6 +5,8 @@ using System.Security.Permissions;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -18,11 +20,13 @@ public class PlayerMovement : MonoBehaviour
 
     public int maxHealth = 100;
     public int currentHealth;
+    public int PlayerSkillPoints;
     public HealthBar healthBar;
     
     public GameObject basespawn;
     public GameObject Weapon;
     public GameObject GameOver;
+    public Button NewAdventureButton;
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
 
@@ -101,6 +105,7 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 GameOver.SetActive(false);
+                NewAdventureButton.gameObject.SetActive(false);
             }
 
             if (transform.position.y < -70)
@@ -133,6 +138,8 @@ public class PlayerMovement : MonoBehaviour
         currentHealth -= maxHealth;
         gameObject.SetActive(false);
         GameOver.SetActive(true);
+        NewAdventureButton.gameObject.SetActive(true);
+
     }
     public void startGame()
     {
