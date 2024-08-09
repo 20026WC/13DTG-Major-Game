@@ -10,6 +10,7 @@ TagManager:
   - EnemySpawn
   - AcentBeginner
   - Shop
+  - Diff
   layers:
   - Default
   - TransparentFX

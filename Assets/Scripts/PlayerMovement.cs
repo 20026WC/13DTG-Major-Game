@@ -11,12 +11,14 @@ using TMPro;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D playerRb;
+    private IncreaseDiff sliderValue;
 
     public float jumpForce;
     public float horizontalInput;
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
     private float powerupStrength = 200000000;
+    
 
     public int maxHealth = 100;
     public int currentHealth;
@@ -42,11 +44,13 @@ public class PlayerMovement : MonoBehaviour
     public bool beginShopping;
     public bool lookingleft = true;
     public bool isOnGround = true;
+    private int levelDifficulty;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = gameObject.GetComponent<Rigidbody2D>();
+        sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
         StartGameButton.gameObject.SetActive(true);  
     }
@@ -63,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
             }
 
-
+            levelDifficulty = (int)sliderValue.diffculty;
             // Code for the playere to jump when space is pressed. 
             if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
             {
@@ -131,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
     void Damage(int damage)
     {
         //This is the code minuses damage from the player's health. 
-        currentHealth -= damage;
+        currentHealth -= damage * levelDifficulty;
         healthBar.SetHealth(currentHealth);
     }
 
