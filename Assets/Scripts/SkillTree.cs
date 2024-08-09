@@ -27,15 +27,15 @@ public class SkillTree : MonoBehaviour
         SkillPoints = 20;
 
         SkillLevels = new int[6];
-        SkillCaps = new[] { 1, 5, 5, 2, 10, 10 };
+        SkillCaps = new[] { 1, 5, 10, 10, 1, 1 };
 
         SkillNames = new[] { "Upgrade 1", "Upgrade 2", "Upgrade 3", "Upgrade 4", "Booster 5", "Booster 6", };
         SkillDescriptions = new[]
         {
             "D",
             "E",
-            "U",
-            "P",
+            "Increases Player Health by 10.",
+            "Increases Player Attack by 10",
             "L",
             "M",
         };

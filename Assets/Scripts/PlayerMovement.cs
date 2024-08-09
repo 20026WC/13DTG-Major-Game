@@ -18,13 +18,14 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
     private float powerupStrength = 200000000;
-    
 
-    public int maxHealth = 100;
+    public int maxHealth;
     public int currentHealth;
     public int PlayerSkillPoints;
+    public int upgraded;
+    private int levelDifficulty;
+
     public HealthBar healthBar;
-    
     public GameObject basespawn;
     public GameObject Weapon;
     public GameObject GameOver;
@@ -42,9 +43,10 @@ public class PlayerMovement : MonoBehaviour
     public bool Shopping;
     public bool PlayerPaused;
     public bool beginShopping;
+    public bool SelectDiff;
     public bool lookingleft = true;
     public bool isOnGround = true;
-    private int levelDifficulty;
+
 
     // Start is called before the first frame update
     void Start()
@@ -180,9 +182,29 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void increaseHeath()
+    {
+        // Only upgraded heath if player has upgraded heath less then 10 times. 
+        if (upgraded <= 9)
+        {
+            maxHealth += 10;
+            // Sends the new max health to the health bar slider. 
+            healthBar.SetMaxHealth(maxHealth);
+            upgraded += 1;
+        }
+
+    }   
+    
+    void increaseAttack()
+    {
+        maxHealth += 10;
+    }
+
     void PlayerSpawnPoint()
     {
+        // This finds the nearest game object with the tag SpawnPoint
         Spawn = GameObject.Find("SpawnPoint");
+        // This sends the player gameobject over to the objecxt tagged with SpawnPoint
         gameObject.transform.position = Spawn.transform.position;
     }
 
@@ -190,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") && !Attacking)
         {
-            // Tells the program to take 1o from player's health.
+            // Tells the program to that Enemys deal 10 damage from player's health.
             Damage(10);         
         }
 
@@ -203,7 +225,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (other.gameObject.CompareTag("Shop"))
         {
+            // Tells Script that the Player has begun shopping.
             beginShopping = true;
+        }        
+        if (other.gameObject.CompareTag("Diff"))
+        {
+            SelectDiff = true;
         }
     }
 
@@ -214,10 +241,15 @@ public class PlayerMovement : MonoBehaviour
         {
             beginShopping = false;
         }
+        if (other.gameObject.CompareTag("Diff"))
+        {
+            SelectDiff = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // KnockBack code. 
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Rigidbody2D enemyRb = collision.gameObject.GetComponent<Rigidbody2D>();
