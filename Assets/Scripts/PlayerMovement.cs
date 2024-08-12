@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject basespawn;
     public GameObject Weapon;
     public GameObject GameOver;
+    public GameObject Fkey;
     
     public Button NewAdventureButton;
     public Button StartGameButton;
@@ -226,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Shop"))
         {
             // Tells Script that the Player has begun shopping.
+            Fkey.SetActive(true);
             beginShopping = true;
         }        
         if (other.gameObject.CompareTag("Diff"))
@@ -240,6 +242,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Shop"))
         {
             beginShopping = false;
+            Fkey.SetActive(false);
+
         }
         if (other.gameObject.CompareTag("Diff"))
         {
