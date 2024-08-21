@@ -4,30 +4,38 @@ using UnityEngine;
 
 public class HitWeakness : MonoBehaviour
 {
-    public bool WeaknessWasHit;
 
-    Rigidbody2D enemyRb;
     public Animator animator;
+    public GameObject NotHitState;
+    public bool PlayerHitEnemyWeakness = false;
+    private BossDamage death;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
-        enemyRb = gameObject.GetComponent<Rigidbody2D>();
+        death = GameObject.Find("Head area").GetComponent<BossDamage>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
+        // This destroys the entire model when the enemies dies.
+        if (death.BossisDead == true)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // If the player hits the enemy's weakness it begins the enemies WeaknessHit animation. 
         if (other.gameObject.CompareTag("Weapon"))
         {
+            // This disables the enemies NotHitState. The enemies NoHitSpace is the enemies' triggers which damage the Player. 
+            NotHitState.SetActive(false);
             animator.SetBool("WeaknessHit", true);
-            
+            PlayerHitEnemyWeakness = true;
+
 
         }
     }
@@ -37,15 +45,19 @@ public class HitWeakness : MonoBehaviour
 
         if (other.gameObject.CompareTag("Weapon"))
         {
-            PlayerHitWeakness();
+            // This ends the enemies weakenss hit animation. 
             animator.SetBool("WeaknessHit", false);
-
+            StartCoroutine(CountdownRoutine());
         }
     }
-    IEnumerator PlayerHitWeakness()
+
+    IEnumerator CountdownRoutine()
     {
-        WeaknessWasHit = true;
-        yield return new WaitForSeconds(10);
-        WeaknessWasHit = false;
+        yield return new WaitForSeconds(2);
+        // This reengages the enemies triggers which damage the Player. 
+        NotHitState.SetActive(true);
+        PlayerHitEnemyWeakness = false;
     }
+
+
 }

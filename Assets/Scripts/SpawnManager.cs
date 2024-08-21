@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour
             if (enemyCount == 0) 
             {
                 RandomisedScript.RandomNumber();
+                int ran = UnityEngine.Random.Range(1, 10);
                 waveNumber++; SpawnEnemyWave(waveNumber);
                 PlayerMovement.Spawned = false;
 

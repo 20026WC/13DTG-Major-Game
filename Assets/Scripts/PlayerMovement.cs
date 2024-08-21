@@ -1,8 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Security.Permissions;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,17 +14,18 @@ public class PlayerMovement : MonoBehaviour
     public float horizontalInput;
     public float speed = 20.0f;
     public float gravityModifier = 2.0f;
-    private float powerupStrength = 200000000;
+    private float powerupStrength = 2;
 
     public int maxHealth;
     public int currentHealth;
     public int PlayerSkillPoints;
     public int upgraded;
-    private int levelDifficulty;
+    public int levelDifficulty;
 
     public HealthBar healthBar;
     public GameObject basespawn;
     public GameObject Weapon;
+    public GameObject AirAttack;
     public GameObject GameOver;
     public GameObject Fkey;
     
@@ -76,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isOnGround = false;
+                    
 
             } 
             // If the player is not looking left and pushes A they are rotated to the left.
@@ -102,6 +101,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Starts countdown for when to despawn sword
                 StartCoroutine(PlayerAttackCountdownRoutine());
+
+                if (!isOnGround)
+                {
+                    playerRb.AddForce(Vector2.down * jumpForce * 2, ForceMode2D.Impulse);                
+                    StartCoroutine(PlayerAirAttackCountdownRoutine());
+
+                }
             }
 
 
@@ -217,6 +223,7 @@ public class PlayerMovement : MonoBehaviour
             Damage(10);         
         }
 
+
         if (other.gameObject.CompareTag("AcentBeginner"))
         {
             startGame();
@@ -251,7 +258,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         // KnockBack code. 
         if (collision.gameObject.CompareTag("Enemy"))
@@ -260,6 +267,11 @@ public class PlayerMovement : MonoBehaviour
             Vector2 direction = (transform.position - collision.gameObject.transform.position).normalized;
             enemyRb.AddForce(direction * powerupStrength, ForceMode2D.Impulse);
         }
+
+        if (collision.gameObject.CompareTag("Jumpable"))
+        {
+            isOnGround = true;
+        }
     }
 
     IEnumerator PlayerAttackCountdownRoutine()
@@ -267,8 +279,18 @@ public class PlayerMovement : MonoBehaviour
         Weapon.SetActive(true);
         Attacking = true;
         // Allows sowrd to be active for a second.
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         Weapon.SetActive(false);
         Attacking = false;
+    }   
+    
+    IEnumerator PlayerAirAttackCountdownRoutine()
+    {
+        AirAttack.SetActive(true);
+        Attacking = true;
+        yield return new WaitForSeconds(1);
+        Attacking = false;
+        AirAttack.SetActive(false);
     }
+
 }
