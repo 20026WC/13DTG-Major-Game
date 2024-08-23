@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject AirAttack;
     public GameObject GameOver;
     public GameObject Fkey;
-    public GameObject StartGamePack;
+    public GameObject TitleScreen;
     
     public Button NewAdventureButton;
 
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
-        StartGamePack.SetActive(true);  
+        TitleScreen.SetActive(true);  
     }
 
     // Update is called once per frame
@@ -174,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
         AcentIsActive = false;
         gameObject.SetActive(true);
         basespawn.SetActive(true);
-        StartGamePack.gameObject.SetActive(false);
+        TitleScreen.gameObject.SetActive(false);
 
     }
 
