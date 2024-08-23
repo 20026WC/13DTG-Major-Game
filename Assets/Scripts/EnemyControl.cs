@@ -9,14 +9,19 @@ public class EnemyControl : MonoBehaviour
     public float speed;
     public float enemyHealth = 20;
     private GameObject player;
+    public GameObject Cube;
     private PlayerMovement PlayerMovement;
     private float powerupStrength = 2;
+    public Color HitColor;
+    public Color NormalColor;
+    private SpriteRenderer rend;
 
     void Start()
     {
         enemyRb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        rend = GetComponent<SpriteRenderer>();
 
         enemyHealth = enemyHealth * PlayerMovement.levelDifficulty;
     }
@@ -57,6 +62,7 @@ public class EnemyControl : MonoBehaviour
         {
             // Gets destroyed if it touches the player's weapon.
             Damage(20);
+            StartCoroutine(CountdownRoutine());
 
         }
     }
@@ -70,5 +76,12 @@ public class EnemyControl : MonoBehaviour
             Vector2 direction = (transform.position - collision.gameObject.transform.position).normalized;
             enemyRb.AddForce(direction * powerupStrength, ForceMode2D.Impulse);
         }
+    }
+
+    IEnumerator CountdownRoutine()
+    {
+        rend.color = HitColor;
+        yield return new WaitForSeconds(2);
+        rend.color = NormalColor;
     }
 }

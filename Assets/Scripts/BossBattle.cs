@@ -33,23 +33,24 @@ public class BossBattle : MonoBehaviour
         }
 
     }
-
     public void LookAtPlayer()
     {
-        Vector3 flipped = transform.localScale;
-        flipped.x *= -1f;
+        // Check if the enemy is on the left side of the player and should face right
+        if (transform.position.x > player.transform.position.x && !isFlipped)
+        {
+            Flip();
+        }
+        // Check if the enemy is on the right side of the player and should face left
+        else if (transform.position.x < player.transform.position.x && isFlipped)
+        {
+            Flip();
+        }
+    }
 
-        if (transform.position.x > player.transform.position.x && isFlipped)
-        {
-            transform.localScale = flipped;
-            transform.Rotate(0f, 180f, 0f);
-            isFlipped = false;
-        }
-        else if (transform.position.x < player.transform.position.x && !isFlipped)
-        {
-            transform.localScale = flipped;
-            transform.Rotate(0f, 180f, 0f);
-            isFlipped = true;
-        }
+    private void Flip()
+    {
+        // Flip the character by rotating 180 degrees on the Y axis
+        transform.Rotate(0f, 180f, 0f);
+        isFlipped = !isFlipped;  // Toggle the flipped state
     }
 }

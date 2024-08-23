@@ -24,6 +24,11 @@ public class HitWeakness : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (transform.position.y < -70)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
