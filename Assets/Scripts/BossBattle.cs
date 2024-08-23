@@ -17,12 +17,12 @@ public class BossBattle : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
+        weakness = GameObject.Find("First Boss(Clone)").GetComponent<HitWeakness>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        weakness = GameObject.Find("First Boss").GetComponent<HitWeakness>();
 
         Physics2D.gravity = new Vector2(0, -9.8f);
         if (weakness.PlayerHitEnemyWeakness == false)

@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
+        basespawn.SetActive(true);
         TitleScreen.SetActive(true);  
     }
 
@@ -157,6 +158,7 @@ public class PlayerMovement : MonoBehaviour
         
         currentHealth -= maxHealth;
         gameObject.SetActive(false);
+        basespawn.SetActive(true);
         GameOver.SetActive(true);
         NewAdventureButton.gameObject.SetActive(true);
 
@@ -180,16 +182,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void ShoppingforUpgrades()
     {
-        if (beginShopping && Shopping) 
-        { 
-            Shopping = false;
-            PlayerPaused = false;
-            
-        }
-        else if (beginShopping && !Shopping)
+        if (beginShopping && !Shopping)
         {
             Shopping = true;
             PlayerPaused = true;
+        }
+        else
+        {
+            Shopping = false;
+            PlayerPaused = false;
         }
     }
 
@@ -279,10 +280,8 @@ public class PlayerMovement : MonoBehaviour
             enemyRb.AddForce(direction * powerupStrength, ForceMode2D.Impulse);
         }
 
-        if (collision.gameObject.CompareTag("Jumpable"))
-        {
-            isOnGround = true;
-        }
+
+        isOnGround = true;
     }
 
     IEnumerator PlayerAttackCountdownRoutine()

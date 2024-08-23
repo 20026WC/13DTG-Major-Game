@@ -9,9 +9,10 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] bossPrefabs;
     private GameObject Spawn;
 
-
+    public bool bossSpawned;
     public int waveNumber = 1;
     public int enemyCount;
+    public int BossCount;
 
     private PlayerMovement PlayerMovement;
     private RandomisedScript RandomisedScript;
@@ -29,17 +30,23 @@ public class SpawnManager : MonoBehaviour
         if (PlayerMovement.AcentIsActive == true)
         {
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
+            BossCount = FindObjectsOfType<BossBattle>().Length;
+            enemyCount = BossCount;
             if (enemyCount == 0) 
             {
                 if (RandomisedScript.BeginAboss == true)
                 {
-                    SpawnEnemyWave( 0);
+                    enemyCount = FindObjectsOfType<BossBattle>().Length;
+                    SpawnEnemyWave(1, true);
+
+
+
                 }
                 else
                 {
                     RandomisedScript.RandomNumber();
                     int ran = UnityEngine.Random.Range(1, 3);
-                    waveNumber++; SpawnEnemyWave(ran);
+                    waveNumber++; SpawnEnemyWave(ran, false);
                 }
 
                 PlayerMovement.Spawned = false;
@@ -53,14 +60,24 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    void SpawnEnemyWave(int enemiesToSpawn)
+    void SpawnEnemyWave(int enemiesToSpawn, bool IsBoss)
     {
         Spawn = GameObject.Find("EnemySpawn");
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             int enemyIndex;
-            enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
-            Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position , enemyPrefabs[enemyIndex].transform.rotation);
+
+            if (IsBoss == true && !bossSpawned)
+            {
+                enemyIndex = UnityEngine.Random.Range(0, bossPrefabs.Length);
+                Instantiate(bossPrefabs[enemyIndex], Spawn.transform.position, bossPrefabs[enemyIndex].transform.rotation);
+                bossSpawned = true;
+            }
+            if (IsBoss == false && bossSpawned)
+            {
+                enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+                Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position, enemyPrefabs[enemyIndex].transform.rotation);
+            }
         }
     }
 }

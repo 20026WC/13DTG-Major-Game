@@ -30,38 +30,42 @@ public class RandomisedScript : MonoBehaviour
 
     public void RandomNumber()
     {
-        int ran = UnityEngine.Random.Range(1, 5);
-        TeleportPlayer = true;
-        if (ran == 1)
+        if (!BeginAboss)
         {
-            level1.SetActive(true);
-            level2.SetActive(false);
-            level3.SetActive(false);
-            level4.SetActive(false);
-        }
-        else if (ran == 2)
-        {
-            level1.SetActive(false);
-            level2.SetActive(true);
-            level3.SetActive(false);
-            level4.SetActive(false);
-        }
-        else if (ran == 3)
-        {
-            level1.SetActive(false);
-            level2.SetActive(false);
-            level3.SetActive(true);
-            level4.SetActive(false);
-        }        
-        else if (ran == 4)
-        {
-            BeginAboss = true;
-            level1.SetActive(false);
-            level2.SetActive(false);
-            level3.SetActive(false);
-            level4.SetActive(true);
+            int ran = UnityEngine.Random.Range(1, 6);
+            TeleportPlayer = true;
+            if (ran == 1)
+            {
+                level1.SetActive(true);
+                level2.SetActive(false);
+                level3.SetActive(false);
+                level4.SetActive(false);
+            }
+            else if (ran == 2)
+            {
+                level1.SetActive(false);
+                level2.SetActive(true);
+                level3.SetActive(false);
+                level4.SetActive(false);
+            }
+            else if (ran == 3)
+            {
+                level1.SetActive(false);
+                level2.SetActive(false);
+                level3.SetActive(true);
+                level4.SetActive(false);
+            }
+            else if (ran == 4)
+            {
+                level1.SetActive(false);
+                level2.SetActive(false);
+                level3.SetActive(false);
+                level4.SetActive(true);
+                BeginAboss = true;
 
+            }
+            TeleportPlayer = false;
         }
-        TeleportPlayer = false;
+
     }
 }

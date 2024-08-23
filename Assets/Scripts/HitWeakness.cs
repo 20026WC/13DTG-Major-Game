@@ -9,11 +9,15 @@ public class HitWeakness : MonoBehaviour
     public GameObject NotHitState;
     public bool PlayerHitEnemyWeakness = false;
     private BossDamage death;
+    private RandomisedScript RandomisedScript;
+    private PlayerMovement Player;
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        Player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         death = GameObject.Find("Head area").GetComponent<BossDamage>();
+        RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
     }
 
     // Update is called once per frame
@@ -22,6 +26,13 @@ public class HitWeakness : MonoBehaviour
         // This destroys the entire model when the enemies dies.
         if (death.BossisDead == true)
         {
+            Destroy(gameObject);
+            RandomisedScript.BeginAboss = false;
+
+        }
+        if (Player.AcentIsActive == false)
+        {
+            RandomisedScript.BeginAboss = false;
             Destroy(gameObject);
         }
 
