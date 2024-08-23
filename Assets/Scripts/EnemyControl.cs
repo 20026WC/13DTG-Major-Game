@@ -11,7 +11,10 @@ public class EnemyControl : MonoBehaviour
     private GameObject player;
     public GameObject Cube;
     private PlayerMovement PlayerMovement;
-    private float powerupStrength = 2;
+    private SpawnManager Spawner;
+    private float powerupStrength = 20000000f;
+    public bool Knockback;
+
     public Color HitColor;
     public Color NormalColor;
     private SpriteRenderer rend;
@@ -21,7 +24,10 @@ public class EnemyControl : MonoBehaviour
         enemyRb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+
+       Spawner = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         rend = GetComponent<SpriteRenderer>();
+        
 
         enemyHealth = enemyHealth * PlayerMovement.levelDifficulty;
     }
@@ -43,17 +49,20 @@ public class EnemyControl : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if (transform.position.y < -70)
+        if (transform.position.y < -40)
         {
             Destroy(gameObject);
         }
+
+
+        
     }
 
 
     void Damage(int damage)
     {
         //This is the code minuses damage from the player's health. 
-        enemyHealth -= damage/ PlayerMovement.levelDifficulty;
+        enemyHealth -= damage / PlayerMovement.levelDifficulty * PlayerMovement.AttackPower;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -69,11 +78,17 @@ public class EnemyControl : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // KnockBack code. 
+        // Check if the collision is with a GameObject tagged as "Weapon"
         if (collision.gameObject.CompareTag("Weapon"))
         {
-            Rigidbody2D enemyRb = collision.gameObject.GetComponent<Rigidbody2D>();
+            Knockback = true;
+            // Get the Rigidbody2D component of the enemy (not the weapon)
+            Rigidbody2D enemyRb = GetComponent<Rigidbody2D>();
+
+            // Calculate the direction from the weapon to the enemy
             Vector2 direction = (transform.position - collision.gameObject.transform.position).normalized;
+
+            // Apply the knockback force to the enemy in the opposite direction of the weapon
             enemyRb.AddForce(direction * powerupStrength, ForceMode2D.Impulse);
         }
     }

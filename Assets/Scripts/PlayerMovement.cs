@@ -17,10 +17,13 @@ public class PlayerMovement : MonoBehaviour
     private float powerupStrength = 2;
 
     public int maxHealth;
+    public int AttackPower = 1;
     public int currentHealth;
     public int PlayerSkillPoints;
-    public int upgraded;
     public int levelDifficulty;
+
+    public int Heathupgraded;
+    public int Attackupgraded;
 
     public HealthBar healthBar;
     public GameObject basespawn;
@@ -28,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject AirAttack;
     public GameObject GameOver;
     public GameObject Fkey;
+    public GameObject StartGamePack;
     
     public Button NewAdventureButton;
-    public Button StartGameButton;
 
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
@@ -53,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
-        StartGameButton.gameObject.SetActive(true);  
+        StartGamePack.SetActive(true);  
     }
 
     // Update is called once per frame
@@ -151,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Death()
     {
+        
         currentHealth -= maxHealth;
         gameObject.SetActive(false);
         GameOver.SetActive(true);
@@ -170,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
         AcentIsActive = false;
         gameObject.SetActive(true);
         basespawn.SetActive(true);
-        StartGameButton.gameObject.SetActive(false);
+        StartGamePack.gameObject.SetActive(false);
 
     }
 
@@ -192,20 +196,27 @@ public class PlayerMovement : MonoBehaviour
     public void increaseHeath()
     {
         // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (upgraded <= 9)
+        if (Heathupgraded <= 9)
         {
             maxHealth += 10;
             // Sends the new max health to the health bar slider. 
             healthBar.SetMaxHealth(maxHealth);
-            upgraded += 1;
+            Heathupgraded += 1;
+        }
+
+    }      
+    
+    public void increaseAttack()
+    {
+        // Only upgraded heath if player has upgraded heath less then 10 times. 
+        if (Attackupgraded <= 9)
+        {
+            AttackPower += 10;
+            Attackupgraded += 1;
         }
 
     }   
     
-    void increaseAttack()
-    {
-        maxHealth += 10;
-    }
 
     void PlayerSpawnPoint()
     {

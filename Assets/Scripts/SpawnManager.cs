@@ -6,7 +6,9 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     public GameObject[] enemyPrefabs;
+    public GameObject[] bossPrefabs;
     private GameObject Spawn;
+
 
     public int waveNumber = 1;
     public int enemyCount;
@@ -19,6 +21,7 @@ public class SpawnManager : MonoBehaviour
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
 
+
     }
 
     void Update()
@@ -28,15 +31,25 @@ public class SpawnManager : MonoBehaviour
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             if (enemyCount == 0) 
             {
-                RandomisedScript.RandomNumber();
-                int ran = UnityEngine.Random.Range(1, 10);
-                waveNumber++; SpawnEnemyWave(waveNumber);
+                if (RandomisedScript.BeginAboss == true)
+                {
+                    SpawnEnemyWave( 0);
+                }
+                else
+                {
+                    RandomisedScript.RandomNumber();
+                    int ran = UnityEngine.Random.Range(1, 3);
+                    waveNumber++; SpawnEnemyWave(ran);
+                }
+
                 PlayerMovement.Spawned = false;
 
             }
 
-            
+
+
         }
+
     }
 
 
@@ -45,7 +58,8 @@ public class SpawnManager : MonoBehaviour
         Spawn = GameObject.Find("EnemySpawn");
         for (int i = 0; i < enemiesToSpawn; i++)
         {
-            int enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
+            int enemyIndex;
+            enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
             Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position , enemyPrefabs[enemyIndex].transform.rotation);
         }
     }
