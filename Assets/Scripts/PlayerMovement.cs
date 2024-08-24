@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public int Attackupgraded;
 
     public HealthBar healthBar;
+    public Animator animator;
 
 
     public GameObject TheHeathBar;
@@ -59,6 +60,7 @@ public class PlayerMovement : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
+        animator = GetComponent<Animator>();
         basespawn.SetActive(true);
         TitleScreen.SetActive(true);  
     }
@@ -73,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
                 horizontalInput = Input.GetAxis("Horizontal");
                 // Space.world ignores the object's rotation and keeps the player moving in the same direction.
                 transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
+                animator.SetBool("Walking", true);
             }
 
             levelDifficulty = (int)sliderValue.diffculty;
@@ -238,7 +241,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy") && !Attacking)
         {
             // Tells the program to that Enemys deal 10 damage from player's health.
-            Damage(10);         
+            Damage(10);
+            animator.SetBool("PlayerWashit", true);
         }
 
 
@@ -263,6 +267,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Enemy") && !Attacking)
+        {
+            animator.SetBool("PlayerWashit", false);
+        }
 
         if (other.gameObject.CompareTag("Shop"))
         {
@@ -292,11 +300,11 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator PlayerAttackCountdownRoutine()
     {
-        Weapon.SetActive(true);
+        animator.SetBool("PlayerAttacking ", true);
         Attacking = true;
         // Allows sowrd to be active for a second.
         yield return new WaitForSeconds(3);
-        Weapon.SetActive(false);
+        animator.SetBool("PlayerAttacking ", false);
         Attacking = false;
     }   
     

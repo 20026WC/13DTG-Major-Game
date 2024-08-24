@@ -12,6 +12,7 @@ public class EnemyControl : MonoBehaviour
     public GameObject Cube;
     private PlayerMovement PlayerMovement;
     private SpawnManager Spawner;
+    private SkillTree SP;
     private float powerupStrength = 20000000f;
     public bool Knockback;
 
@@ -25,7 +26,9 @@ public class EnemyControl : MonoBehaviour
         player = GameObject.Find("Player");
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
-       Spawner = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        SP = GameObject.Find("Skill Tree").GetComponent<SkillTree>();
+
+        Spawner = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         rend = GetComponent<SpriteRenderer>();
         
 
@@ -40,7 +43,7 @@ public class EnemyControl : MonoBehaviour
         if (enemyHealth < 0)
         {
             Destroy(gameObject);
-            PlayerMovement.PlayerSkillPoints += 10;
+            SP.SkillPoints += 10;
 
         }
 

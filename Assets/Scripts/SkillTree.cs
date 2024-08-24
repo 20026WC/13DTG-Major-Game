@@ -9,6 +9,8 @@ public class SkillTree : MonoBehaviour
     public static SkillTree skillTree;
     private void Awake() => skillTree = this;
 
+    private PlayerMovement Player;
+
     public int[] SkillLevels;
     public int[] SkillCaps;
     public string[] SkillNames;
@@ -24,7 +26,6 @@ public class SkillTree : MonoBehaviour
 
     private void Start()
     {
-        SkillPoints = 20;
 
         SkillLevels = new int[6];
         SkillCaps = new[] { 1, 5, 10, 10, 1, 1 };
