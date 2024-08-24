@@ -12,12 +12,17 @@ public class RandomisedScript : MonoBehaviour
     public bool TeleportPlayer;
     public bool BeginAboss;
 
+    public int DefeatedStage = 0;
+
     private PlayerMovement PlayerMovement;
+    private SpawnManager SM;
 
     void Start()
     {
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        
+        SM = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        SM.bossSpawned = true;
+
     }
 
     public void StartofGame()
@@ -32,7 +37,7 @@ public class RandomisedScript : MonoBehaviour
     {
         if (!BeginAboss)
         {
-            int ran = UnityEngine.Random.Range(1, 6);
+            int ran = UnityEngine.Random.Range(1, 4);
             TeleportPlayer = true;
             if (ran == 1)
             {
@@ -55,15 +60,18 @@ public class RandomisedScript : MonoBehaviour
                 level3.SetActive(true);
                 level4.SetActive(false);
             }
-            else if (ran == 4)
+
+            if (DefeatedStage == 5)
             {
+                SM.bossSpawned = false;
                 level1.SetActive(false);
                 level2.SetActive(false);
                 level3.SetActive(false);
                 level4.SetActive(true);
                 BeginAboss = true;
-
+                DefeatedStage = 0;
             }
+
             TeleportPlayer = false;
         }
 

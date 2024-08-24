@@ -26,14 +26,12 @@ public class HitWeakness : MonoBehaviour
         // This destroys the entire model when the enemies dies.
         if (death.BossisDead == true)
         {
-            Destroy(gameObject);
-            RandomisedScript.BeginAboss = false;
+            AfterMathOfbATTLE();
 
         }
         if (Player.AcentIsActive == false)
         {
-            RandomisedScript.BeginAboss = false;
-            Destroy(gameObject);
+            AfterMathOfbATTLE();
         }
 
         if (transform.position.y < -70)
@@ -42,6 +40,12 @@ public class HitWeakness : MonoBehaviour
         }
     }
 
+    public void AfterMathOfbATTLE()
+    {
+        RandomisedScript.BeginAboss = false;
+        
+        Destroy(gameObject);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         // If the player hits the enemy's weakness it begins the enemies WeaknessHit animation. 

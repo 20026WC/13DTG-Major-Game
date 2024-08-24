@@ -468,6 +468,7 @@ MonoBehaviour:
   level4: {fileID: 1973525094}
   TeleportPlayer: 1
   BeginAboss: 0
+  DefeatedStage: 0
 --- !u!50 &155666587
 Rigidbody2D:
   serializedVersion: 4
@@ -4662,6 +4663,7 @@ MonoBehaviour:
   Heathupgraded: 0
   Attackupgraded: 0
   healthBar: {fileID: 2112123214}
+  TheHeathBar: {fileID: 2112123212}
   basespawn: {fileID: 2073683926}
   Weapon: {fileID: 1098004452}
   AirAttack: {fileID: 1436576616}
@@ -5810,6 +5812,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2112123212}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

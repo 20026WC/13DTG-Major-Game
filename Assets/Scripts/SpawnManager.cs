@@ -31,14 +31,15 @@ public class SpawnManager : MonoBehaviour
         {
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             BossCount = FindObjectsOfType<BossBattle>().Length;
-            enemyCount = BossCount;
             if (enemyCount == 0) 
             {
                 if (RandomisedScript.BeginAboss == true)
                 {
-                    enemyCount = FindObjectsOfType<BossBattle>().Length;
-                    SpawnEnemyWave(1, true);
-
+                    if(BossCount == 0)
+                    {
+                        SpawnEnemyWave(1, true);
+                        PlayerMovement.Spawned = false;
+                    }
 
 
                 }
@@ -47,9 +48,10 @@ public class SpawnManager : MonoBehaviour
                     RandomisedScript.RandomNumber();
                     int ran = UnityEngine.Random.Range(1, 3);
                     waveNumber++; SpawnEnemyWave(ran, false);
+                    PlayerMovement.Spawned = false;
+                    RandomisedScript.DefeatedStage += 1;
                 }
 
-                PlayerMovement.Spawned = false;
 
             }
 
@@ -76,7 +78,7 @@ public class SpawnManager : MonoBehaviour
             if (IsBoss == false && bossSpawned)
             {
                 enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
-                Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position, enemyPrefabs[enemyIndex].transform.rotation);
+                Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position, enemyPrefabs[enemyIndex].transform.rotation); 
             }
         }
     }

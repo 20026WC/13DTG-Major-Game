@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     public int Attackupgraded;
 
     public HealthBar healthBar;
+
+
+    public GameObject TheHeathBar;
     public GameObject basespawn;
     public GameObject Weapon;
     public GameObject AirAttack;
@@ -170,10 +173,13 @@ public class PlayerMovement : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
+
         GameIsActive = true;
         PlayerPaused = false;
         Spawned = false;
         AcentIsActive = false;
+
+        TheHeathBar.SetActive(true);
         gameObject.SetActive(true);
         basespawn.SetActive(true);
         TitleScreen.gameObject.SetActive(false);
