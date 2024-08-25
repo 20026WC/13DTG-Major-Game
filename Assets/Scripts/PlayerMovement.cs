@@ -75,7 +75,15 @@ public class PlayerMovement : MonoBehaviour
                 horizontalInput = Input.GetAxis("Horizontal");
                 // Space.world ignores the object's rotation and keeps the player moving in the same direction.
                 transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
-                animator.SetBool("Walking", true);
+                if (horizontalInput == 0)
+                {
+                    animator.SetBool("Walking", false);
+                }
+                else
+                {
+                    animator.SetBool("Walking", true);
+                }
+
             }
 
             levelDifficulty = (int)sliderValue.diffculty;
@@ -84,7 +92,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 isOnGround = false;
-                    
+                animator.SetBool("PlayerJumping", true);
+
 
             } 
             // If the player is not looking left and pushes A they are rotated to the left.
@@ -296,6 +305,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         isOnGround = true;
+        animator.SetBool("PlayerJumping", false);
     }
 
     IEnumerator PlayerAttackCountdownRoutine()
@@ -303,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("PlayerAttacking ", true);
         Attacking = true;
         // Allows sowrd to be active for a second.
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         animator.SetBool("PlayerAttacking ", false);
         Attacking = false;
     }   
