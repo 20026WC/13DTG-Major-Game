@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject Spawn;
 
     public bool bossSpawned;
+    public bool PlayerIsDead;
     public int waveNumber = 1;
     public int enemyCount;
     public int BossCount;
@@ -31,6 +32,7 @@ public class SpawnManager : MonoBehaviour
         {
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             BossCount = FindObjectsOfType<BossBattle>().Length;
+            PlayerIsDead = false;
             if (enemyCount == 0) 
             {
                 if (RandomisedScript.BeginAboss == true)
@@ -60,7 +62,10 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-
+    public void PlayerHasDied()
+    {
+        PlayerIsDead = true;
+    }
 
     void SpawnEnemyWave(int enemiesToSpawn, bool IsBoss)
     {

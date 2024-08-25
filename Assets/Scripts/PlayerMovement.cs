@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
 
-    public bool Attacking;
+    public bool NODamage;
     public bool GameIsActive;
     public bool AcentIsActive;
     public bool Spawned;
@@ -129,6 +129,20 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
 
+            // Checks if the right mouse button (1) is pressed down
+            if (Input.GetMouseButtonDown(1))
+            {
+                animator.SetBool("Defending", true);
+                NODamage = true;  // Activate NODamage when defending
+            }
+
+            // Check if the right mouse button (1) is released
+            if (Input.GetMouseButtonUp(1))
+            {
+                animator.SetBool("Defending", false);
+                NODamage = false;  // Deactivate NODamage when no longer defending
+            }
+
 
             // This kills the player if they reach a higght below -20.
 
@@ -136,6 +150,8 @@ public class PlayerMovement : MonoBehaviour
             if (currentHealth <= 0)
             {
                 Death();
+                animator.SetBool("Defending", false);
+
             }
             else
             {
@@ -162,8 +178,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Damage(int damage)
     {
-        //This is the code minuses damage from the player's health. 
-        currentHealth -= damage * levelDifficulty;
+        if (NODamage == true)
+        {
+            return;
+        }
+        else if (NODamage == false)
+        {
+            //This is the code minuses damage from the player's health. 
+            currentHealth -= damage * levelDifficulty;
+        }
+
         healthBar.SetHealth(currentHealth);
     }
 
@@ -176,11 +200,13 @@ public class PlayerMovement : MonoBehaviour
         basespawn.SetActive(true);
         GameOver.SetActive(true);
         NewAdventureButton.gameObject.SetActive(true);
+        animator.SetBool("Respawn", true);
 
     }
     public void startGame()
     {
         PlayerSpawnPoint();
+        animator.SetBool("Respawn", false);
         Physics.gravity *= gravityModifier;
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
@@ -247,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && !Attacking)
+        if (other.gameObject.CompareTag("Enemy") && !NODamage)
         {
             // Tells the program to that Enemys deal 10 damage from player's health.
             Damage(10);
@@ -276,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && !Attacking)
+        if (other.gameObject.CompareTag("Enemy"))
         {
             animator.SetBool("PlayerWashit", false);
         }
@@ -311,19 +337,21 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator PlayerAttackCountdownRoutine()
     {
         animator.SetBool("PlayerAttacking ", true);
-        Attacking = true;
+        NODamage = true;
         // Allows sowrd to be active for a second.
         yield return new WaitForSeconds(1);
         animator.SetBool("PlayerAttacking ", false);
-        Attacking = false;
+        NODamage = false;
     }   
     
     IEnumerator PlayerAirAttackCountdownRoutine()
     {
         AirAttack.SetActive(true);
-        Attacking = true;
+        NODamage = true;
+        animator.SetBool("PlayerJumpAttack", true);
         yield return new WaitForSeconds(1);
-        Attacking = false;
+        animator.SetBool("PlayerJumpAttack", false);
+        NODamage = false;
         AirAttack.SetActive(false);
     }
 

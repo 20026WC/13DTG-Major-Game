@@ -231,6 +231,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 943654536}
+        m_TargetAssemblyTypeName: SpawnManager, Assembly-CSharp
+        m_MethodName: PlayerHasDied
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &27528929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2052,7 +2064,7 @@ GameObject:
   - component: {fileID: 421565607}
   m_Layer: 0
   m_Name: AirAttack
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2072,19 +2084,32 @@ Transform:
   m_Father: {fileID: 1092148996}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &421565607
-BoxCollider:
+--- !u!61 &421565607
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 421565605}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.07128739, y: 0.10311723}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4.5089564, y: 7.554254}
+  m_EdgeRadius: 0
 --- !u!1 &426471415
 GameObject:
   m_ObjectHideFlags: 0
@@ -3434,20 +3459,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'A to move to the left.
-
-    D to move to the right
-
-    Space to jump
-
-    Left
-    Mouse Click to attack and click things
-
-    F to interact with certain objects
-
-
-
-'
+  m_text: "A to move to the left.\nD to move to the right\nSpace to jump\nLeft Mouse
+    Click to attack and click things\nRight Mouse Click blocks/negates damage. \nF
+    to interact with certain objects\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4156,7 +4170,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1092148995}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: ShoppingforUpgrades
         m_Mode: 1
@@ -4575,6 +4589,7 @@ MonoBehaviour:
   bossPrefabs:
   - {fileID: 4455919667445401724, guid: fd8291a2f5b292645a1332272da81c78, type: 3}
   bossSpawned: 0
+  PlayerIsDead: 0
   waveNumber: 1
   enemyCount: 0
   BossCount: 0
@@ -4992,14 +5007,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1021009080}
-  m_LocalRotation: {x: 0.018782673, y: 0.0020481944, z: -0.004853105, w: 0.99980974}
+  m_LocalRotation: {x: 0.021037664, y: -0.01755568, z: -0.052029945, w: 0.99826956}
   m_LocalPosition: {x: -0.13328701, y: -0.94202745, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 126694770}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 2.154, y: 0.224, z: -0.552}
+  m_LocalEulerAnglesHint: {x: 2.303, y: -2.136, z: -6.01}
 --- !u!212 &1021009082
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5282,12 +5297,12 @@ MonoBehaviour:
   TheHeathBar: {fileID: 2112123212}
   basespawn: {fileID: 2073683926}
   Weapon: {fileID: 0}
-  AirAttack: {fileID: 0}
+  AirAttack: {fileID: 421565605}
   GameOver: {fileID: 27528926}
   Fkey: {fileID: 1326598111}
   TitleScreen: {fileID: 1752150246}
   NewAdventureButton: {fileID: 1994427853}
-  Attacking: 1
+  NODamage: 0
   GameIsActive: 0
   AcentIsActive: 0
   Spawned: 0
@@ -5304,8 +5319,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1092148992}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.6, y: 283.5, z: -5.79}
+  m_LocalRotation: {x: -0.02829787, y: 0.99955815, z: -0.0014772973, w: 0.008971396}
+  m_LocalPosition: {x: -0.438, y: 283.5, z: -5.79}
   m_LocalScale: {x: 0.456017, y: 0.31377426, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5315,7 +5330,7 @@ Transform:
   - {fileID: 421565606}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.14, y: 178.968, z: -3.245}
 --- !u!95 &1092148997
 Animator:
   serializedVersion: 5

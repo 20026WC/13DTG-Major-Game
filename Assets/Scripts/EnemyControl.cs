@@ -43,18 +43,23 @@ public class EnemyControl : MonoBehaviour
         if (enemyHealth < 0)
         {
             Destroy(gameObject);
-            SP.SkillPoints += 10;
+            SP.SkillPoints += 1;
 
         }
 
         if (PlayerMovement.AcentIsActive == false)
         {
-            Destroy(gameObject);
+            death();
         }
 
         if (transform.position.y < -40)
         {
-            Destroy(gameObject);
+            death();
+        }
+
+        if (Spawner.PlayerIsDead == true)
+        {
+            death();
         }
 
 
@@ -66,6 +71,11 @@ public class EnemyControl : MonoBehaviour
     {
         //This is the code minuses damage from the player's health. 
         enemyHealth -= damage / PlayerMovement.levelDifficulty * PlayerMovement.AttackPower;
+    }
+
+    public void death()
+    {
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
