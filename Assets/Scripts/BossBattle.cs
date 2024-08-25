@@ -11,13 +11,14 @@ public class BossBattle : MonoBehaviour
     private GameObject player;
     private HitWeakness weakness;
     public bool isFlipped = false;
+    public GameObject TheBossLevel;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player");
-        weakness = GameObject.Find("First Boss(Clone)").GetComponent<HitWeakness>();
+        weakness = GameObject.Find("First Boss").GetComponent<HitWeakness>();
     }
 
     // Update is called once per frame

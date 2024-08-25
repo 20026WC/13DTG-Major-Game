@@ -4381,8 +4381,8 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 3767984286517347694, guid: 8a9ea847d61ba5f4cada91b12a4c0c42, type: 3}
   bossPrefabs:
-  - {fileID: 6805415920563816850, guid: c5687448ba449f14b80f30a83380fb5b, type: 3}
-  - {fileID: 7611918174088824655, guid: cbe4d81a0bcb3bc459374a29350ffbaa, type: 3}
+  - {fileID: 1068163421714901926, guid: c5687448ba449f14b80f30a83380fb5b, type: 3}
+  - {fileID: 556125862220521054, guid: a3cb54ae33ae36049809f5e97a1f6a1b, type: 3}
   bossSpawned: 0
   PlayerIsDead: 0
   waveNumber: 1
@@ -9448,63 +9448,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &1977034063
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 172.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2.24
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.008746454
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9999618
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936968, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6060104453411936975, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
-      propertyPath: m_Name
-      value: Whale Boss Fight 2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e798e397023ecf5419e0fb8aa787b3ac, type: 3}
 --- !u!1 &1994427850
 GameObject:
   m_ObjectHideFlags: 0

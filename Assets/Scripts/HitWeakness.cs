@@ -11,6 +11,7 @@ public class HitWeakness : MonoBehaviour
     private BossDamage death;
     private RandomisedScript RandomisedScript;
     private PlayerMovement Player;
+    public GameObject EndLevelDoor;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +30,6 @@ public class HitWeakness : MonoBehaviour
             AfterMathOfbATTLE();
 
         }
-        if (Player.AcentIsActive == false)
-        {
-            AfterMathOfbATTLE();
-        }
 
         if (transform.position.y < -70)
         {
@@ -41,10 +38,9 @@ public class HitWeakness : MonoBehaviour
     }
 
     public void AfterMathOfbATTLE()
-    {
-        RandomisedScript.BeginAboss = false;
-        
+    {       
         Destroy(gameObject);
+        EndLevelDoor.SetActive(true);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

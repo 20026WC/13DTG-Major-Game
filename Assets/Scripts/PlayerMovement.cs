@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     public bool SelectDiff;
     public bool lookingleft = true;
     public bool isOnGround = true;
+    public bool StartNewLevel = true;
 
 
     // Start is called before the first frame update
@@ -286,6 +287,11 @@ public class PlayerMovement : MonoBehaviour
             startGame();
             AcentIsActive = true;
             basespawn.SetActive(false);
+        }  
+        
+        if (other.gameObject.CompareTag("Next Level"))
+        {
+            StartNewLevel = true;
         }
 
         if (other.gameObject.CompareTag("Shop"))

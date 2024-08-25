@@ -13,6 +13,10 @@ TagManager:
   - Diff
   - Weakspot
   - Jumpable
+  - Floor
+  - BeginGiantBattle
+  - BossBattleLevel
+  - Next Level
   layers:
   - Default
   - TransparentFX
