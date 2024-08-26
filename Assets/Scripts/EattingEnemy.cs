@@ -6,16 +6,16 @@ public class EattingEnemy : MonoBehaviour
 {
     public bool Stop;
     public GameObject EnemySpawner;    
-    public GameObject PlayersFirstSpawn;
-    public GameObject PlayersNewSpawn;
+    public GameObject PlayersFirstSpawn; 
+    public GameObject RunningSectionOfFight;
 
     private float speed = 2;
     private WhaleBossFight Whale;
     // Start is called before the first frame update
     void Start()
     {
+        Whale = GameObject.Find("WhaleEnemySpawner").GetComponent<WhaleBossFight>();
         Stop = false;
-        Whale = GameObject.Find("EnemySpawn").GetComponent<WhaleBossFight>();
     }
 
     // Update is called once per frame
@@ -38,14 +38,15 @@ public class EattingEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("Floor"))
         {
             Destroy(other.gameObject);
+            Destroy(PlayersFirstSpawn.gameObject);
         }
         
         if (other.gameObject.CompareTag("BeginGiantBattle"))
         {
             Stop = true;
             EnemySpawner.SetActive(true);
-            PlayersNewSpawn.SetActive(true);
-            Destroy(PlayersFirstSpawn.gameObject);
+            RunningSectionOfFight.SetActive(true);
+
             
         }
     }

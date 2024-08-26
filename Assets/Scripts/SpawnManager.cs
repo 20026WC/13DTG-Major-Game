@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject Spawn;
 
     public bool bossSpawned;
-    public bool PlayerIsDead;
+    public bool PlayerIsDead = false;
     public int waveNumber = 1;
     public int enemyCount;
     public int BossCount;
@@ -33,11 +33,11 @@ public class SpawnManager : MonoBehaviour
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             BossCount = GameObject.FindGameObjectsWithTag("BossBattleLevel").Length;
             PlayerIsDead = false;
-            if (enemyCount == 0) 
+            if (enemyCount == 0)
             {
                 if (RandomisedScript.BeginAboss == true)
                 {
-                    if(BossCount == 0)
+                    if (BossCount == 0)
                     {
                         SpawnEnemyWave(1, true);
                         PlayerMovement.Spawned = false;
@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour
             if (IsBoss == false && bossSpawned)
             {
                 enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);
-                Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position, enemyPrefabs[enemyIndex].transform.rotation); 
+                Instantiate(enemyPrefabs[enemyIndex], Spawn.transform.position, enemyPrefabs[enemyIndex].transform.rotation);
             }
         }
     }

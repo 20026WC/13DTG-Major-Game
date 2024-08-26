@@ -47,10 +47,11 @@ public class EnemyControl : MonoBehaviour
 
         }
 
-        if (PlayerMovement.AcentIsActive == false)
+        if (!PlayerMovement.AcentIsActive)
         {
             death();
         }
+
 
         if (transform.position.y < -40)
         {

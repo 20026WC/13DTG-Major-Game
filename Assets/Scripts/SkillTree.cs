@@ -26,7 +26,7 @@ public class SkillTree : MonoBehaviour
 
     private void Start()
     {
-
+        SkillPoints = 2;
         SkillLevels = new int[6];
         SkillCaps = new[] { 1, 5, 10, 10, 1, 1 };
 
@@ -34,11 +34,11 @@ public class SkillTree : MonoBehaviour
         SkillDescriptions = new[]
         {
             "D",
-            "E",
-            "Increases Player Health by 10.",
+            "Increase Speed by 10",
+            "Increases Player Health by 10",
             "Increases Player Attack by 10",
-            "L",
-            "M",
+            "Heal Health after every Stage",
+            "Beating bosses restores Health",
         };
 
         foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);

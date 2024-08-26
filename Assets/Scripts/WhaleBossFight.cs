@@ -19,6 +19,7 @@ public class WhaleBossFight : MonoBehaviour
     void Start()
     {
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        WhaleisDead = false;
 
 
     }
@@ -37,13 +38,14 @@ public class WhaleBossFight : MonoBehaviour
         {
             EndLevelDoor.SetActive(true);
             WhaleisDead = true;
+            Destroy(gameObject);
         }
 
     }
 
     void SpawnEnemyWave(int enemiesToSpawn)
     {
-        Spawn = GameObject.Find("EnemySpawn");
+        Spawn = GameObject.Find("WhaleEnemySpawner");
         for (int i = 0; i < enemiesToSpawn; i++)
         {
             int enemyIndex = UnityEngine.Random.Range(0, enemyPrefabs.Length);

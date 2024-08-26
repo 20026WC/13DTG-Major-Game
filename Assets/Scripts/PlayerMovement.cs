@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float jumpForce;
     public float horizontalInput;
-    public float speed = 20.0f;
+    public int speed;
     public float gravityModifier = 2.0f;
     private float powerupStrength = 2;
 
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     public int Heathupgraded;
     public int Attackupgraded;
+    public int Speedupgraded;
 
     public HealthBar healthBar;
     public Animator animator;
@@ -36,11 +37,14 @@ public class PlayerMovement : MonoBehaviour
     public GameObject GameOver;
     public GameObject Fkey;
     public GameObject TitleScreen;
+
     
     public Button NewAdventureButton;
 
     private GameObject Spawn;
     private RandomisedScript RandomisedScript;
+    private SkillTree SP;
+
 
     public bool NODamage;
     public bool GameIsActive;
@@ -52,7 +56,9 @@ public class PlayerMovement : MonoBehaviour
     public bool SelectDiff;
     public bool lookingleft = true;
     public bool isOnGround = true;
-    public bool StartNewLevel = true;
+    public bool StartNewLevel = false;
+
+
 
 
     // Start is called before the first frame update
@@ -61,7 +67,9 @@ public class PlayerMovement : MonoBehaviour
         playerRb = gameObject.GetComponent<Rigidbody2D>();
         sliderValue = GameObject.Find("Slider").GetComponent<IncreaseDiff>();
         RandomisedScript = GameObject.Find("Levels").GetComponent<RandomisedScript>();
+        SP = GameObject.Find("Skill Tree").GetComponent<SkillTree>();
         animator = GetComponent<Animator>();
+        speed = 5;
         basespawn.SetActive(true);
         TitleScreen.SetActive(true);  
     }
@@ -242,7 +250,7 @@ public class PlayerMovement : MonoBehaviour
     public void increaseHeath()
     {
         // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (Heathupgraded <= 9)
+        if (Heathupgraded <= 9 && SP.SkillPoints >= 1)
         {
             maxHealth += 10;
             // Sends the new max health to the health bar slider. 
@@ -255,10 +263,21 @@ public class PlayerMovement : MonoBehaviour
     public void increaseAttack()
     {
         // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (Attackupgraded <= 9)
+        if (Attackupgraded <= 9 && SP.SkillPoints >= 1)
         {
             AttackPower += 10;
             Attackupgraded += 1;
+        }
+
+    }      
+    
+    public void increaseSpeed()
+    {
+        // Only upgraded heath if player has upgraded heath less then 10 times. 
+        if (Speedupgraded <= 5 && SP.SkillPoints >= 1)
+        {
+            speed += 1;
+            Speedupgraded += 1;
         }
 
     }   

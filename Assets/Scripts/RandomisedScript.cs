@@ -13,6 +13,7 @@ public class RandomisedScript : MonoBehaviour
     public bool BeginAboss;
 
     public int DefeatedStage = 0;
+    private SkillTree SP;
 
     private PlayerMovement PlayerMovement;
     private SpawnManager SM;
@@ -21,6 +22,7 @@ public class RandomisedScript : MonoBehaviour
     {
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         SM = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        SP = GameObject.Find("Skill Tree").GetComponent<SkillTree>();
         SM.bossSpawned = true;
 
     }
@@ -73,6 +75,7 @@ public class RandomisedScript : MonoBehaviour
             }
 
             TeleportPlayer = false;
+            SP.SkillPoints += 1;
         }
 
     }

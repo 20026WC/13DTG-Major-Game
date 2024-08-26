@@ -22,7 +22,9 @@ public class NextLevel : MonoBehaviour
         if (Player.AcentIsActive == false)
         {
             AfterMathOfbATTLE();
-        }  
+        }
+
+
         if (Player.StartNewLevel == true)
         {
             AfterMathOfbATTLE();

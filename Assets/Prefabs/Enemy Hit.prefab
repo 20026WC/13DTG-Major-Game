@@ -173,8 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca39130e53728314bb2ba3cb96fad58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 86.2
-  enemyHealth: 20
+  speed: 50.9
+  enemyHealth: 10
   Cube: {fileID: 3767984286517347694}
   Knockback: 1
   HitColor: {r: 1, g: 0, b: 0, a: 1}
