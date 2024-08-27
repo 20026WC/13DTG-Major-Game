@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BossBattle : MonoBehaviour
 {
     // Code was taken from https://www.youtube.com/watch?v=AD4JIXQDw0s&list=PLRRnET3ZAhEzkrCdxn9Ik1xvwuwrFpPDp, due to my Enemy AI being very boring.

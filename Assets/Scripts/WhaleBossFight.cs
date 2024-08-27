@@ -12,13 +12,15 @@ public class WhaleBossFight : MonoBehaviour
     public GameObject EndLevelDoor;
 
     public bool WhaleisDead;
+    public GameObject Enemy;
 
     private PlayerMovement PlayerMovement;
-    private RandomisedScript RandomisedScript;
+    private EattingEnemy Whale;
     // Start is called before the first frame update
     void Start()
     {
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        Whale = GameObject.Find("Giant Enemy").GetComponent<EattingEnemy>();
         WhaleisDead = false;
 
 
@@ -27,19 +29,23 @@ public class WhaleBossFight : MonoBehaviour
     void Update()
     {
         enemyCount = FindObjectsOfType<EnemyControl>().Length;
-        if (enemyCount == 0)
+        if (Whale.Stop == true)
         {
-            int ran = UnityEngine.Random.Range(1, 3);
-            waveNumber++; SpawnEnemyWave(ran);
-            EnemyHealth -= 20;
+            if (enemyCount == 0)
+            {
+                int ran = UnityEngine.Random.Range(1, 3);
+                waveNumber++; SpawnEnemyWave(ran);
+                EnemyHealth -= 20;
+            }
+
+            if (EnemyHealth <= 0)
+            {
+                EndLevelDoor.SetActive(true);
+                WhaleisDead = true;
+                Destroy(Enemy.gameObject);
+            }
         }
 
-        if (EnemyHealth <= 0)
-        {
-            EndLevelDoor.SetActive(true);
-            WhaleisDead = true;
-            Destroy(gameObject);
-        }
 
     }
 

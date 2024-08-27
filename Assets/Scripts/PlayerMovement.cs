@@ -32,13 +32,14 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject TheHeathBar;
     public GameObject basespawn;
-    public GameObject Weapon;
+    public GameObject PlayersBaseSpawnPoint;
     public GameObject AirAttack;
     public GameObject GameOver;
     public GameObject Fkey;
     public GameObject TitleScreen;
+    public GameObject TheFinalLevel;
 
-    
+
     public Button NewAdventureButton;
 
     private GameObject Spawn;
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     public bool NODamage;
+    public bool Leaving;
     public bool GameIsActive;
     public bool AcentIsActive;
     public bool Spawned;
@@ -57,6 +59,8 @@ public class PlayerMovement : MonoBehaviour
     public bool lookingleft = true;
     public bool isOnGround = true;
     public bool StartNewLevel = false;
+    public bool BeginFinal = false;
+    public bool NearingEnding = false;
 
 
 
@@ -225,6 +229,7 @@ public class PlayerMovement : MonoBehaviour
         PlayerPaused = false;
         Spawned = false;
         AcentIsActive = false;
+        PlayersBaseSpawnPoint.SetActive(true);
 
         TheHeathBar.SetActive(true);
         gameObject.SetActive(true);
@@ -246,41 +251,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerPaused = false;
         }
     }
-
-    public void increaseHeath()
-    {
-        // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (Heathupgraded <= 9 && SP.SkillPoints >= 1)
-        {
-            maxHealth += 10;
-            // Sends the new max health to the health bar slider. 
-            healthBar.SetMaxHealth(maxHealth);
-            Heathupgraded += 1;
-        }
-
-    }      
-    
-    public void increaseAttack()
-    {
-        // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (Attackupgraded <= 9 && SP.SkillPoints >= 1)
-        {
-            AttackPower += 10;
-            Attackupgraded += 1;
-        }
-
-    }      
-    
-    public void increaseSpeed()
-    {
-        // Only upgraded heath if player has upgraded heath less then 10 times. 
-        if (Speedupgraded <= 5 && SP.SkillPoints >= 1)
-        {
-            speed += 1;
-            Speedupgraded += 1;
-        }
-
-    }   
+  
     
 
     void PlayerSpawnPoint()
@@ -310,7 +281,16 @@ public class PlayerMovement : MonoBehaviour
         
         if (other.gameObject.CompareTag("Next Level"))
         {
-            StartNewLevel = true;
+            if (RandomisedScript.DefeatedBosses >= 1)
+            {
+                TheFinalLevel.SetActive(true);
+                StartNewLevel = true;
+                BeginFinal = true;
+            }
+            else
+            {
+                StartNewLevel = true;
+            }
         }
 
         if (other.gameObject.CompareTag("Shop"))
@@ -318,10 +298,27 @@ public class PlayerMovement : MonoBehaviour
             // Tells Script that the Player has begun shopping.
             Fkey.SetActive(true);
             beginShopping = true;
+        }            
+        
+        if (other.gameObject.CompareTag("Exit"))
+        {
+            Leaving = true;
         }        
         if (other.gameObject.CompareTag("Diff"))
         {
             SelectDiff = true;
+        }        
+        
+        if (other.gameObject.CompareTag("Ending"))
+        {
+            NearingEnding = true;
+        }
+
+        if (other.gameObject.CompareTag("Death"))
+        {
+            // Gets destroyed if it touches the player's weapon.
+            Death();
+
         }
     }
 
@@ -338,10 +335,56 @@ public class PlayerMovement : MonoBehaviour
             Fkey.SetActive(false);
 
         }
+
+        if (other.gameObject.CompareTag("Exit"))
+        {
+            Leaving = false;
+        }
+
         if (other.gameObject.CompareTag("Diff"))
         {
             SelectDiff = false;
         }
+    }
+
+    // These are the functions for Skill Tree Upgrades.
+    // This increases the Player's health as long as the player hasn't done 10 upgrades.
+    public void increaseHeath()
+    {
+        // Only upgraded heath if player has upgraded heath less then 10 times. 
+        if (Heathupgraded <= 9 && SP.SkillPoints >= 1)
+        {
+            maxHealth += 10;
+            // Sends the new max health to the health bar slider. 
+            healthBar.SetMaxHealth(maxHealth);
+            // Adds a one to the heathUpgarded function to show the player has upgraded once again.
+            Heathupgraded += 1;
+        }
+
+    }
+
+    // This is the increase Attack function. This makes the player's attacks stronger.
+    public void increaseAttack()
+    {
+        // Only upgrades Attack if player has upgraded attack less then 10 times. 
+        if (Attackupgraded <= 9 && SP.SkillPoints >= 1)
+        {
+            AttackPower += 10;
+            Attackupgraded += 1;
+        }
+
+    }
+
+    // This increases the speed of the Player.
+    public void increaseSpeed()
+    {
+        // Only upgrades speed if player has upgraded speed less then 10 times. 
+        if (Speedupgraded <= 5 && SP.SkillPoints >= 1)
+        {
+            speed += 1;
+            Speedupgraded += 1;
+        }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

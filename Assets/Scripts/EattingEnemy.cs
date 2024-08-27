@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class EattingEnemy : MonoBehaviour
 {
-    public bool Stop;
-    public GameObject EnemySpawner;    
+    public bool Stop;   
     public GameObject PlayersFirstSpawn; 
     public GameObject RunningSectionOfFight;
 
-    private float speed = 2;
-    private WhaleBossFight Whale;
+    private float speed = 5;
     // Start is called before the first frame update
     void Start()
     {
-        Whale = GameObject.Find("WhaleEnemySpawner").GetComponent<WhaleBossFight>();
         Stop = false;
     }
 
@@ -26,10 +23,6 @@ public class EattingEnemy : MonoBehaviour
             transform.Translate(Vector2.down * Time.deltaTime * speed);
         }
 
-        if (Whale.WhaleisDead == true)
-        {
-            Destroy(gameObject);
-        }
 
     }
 
@@ -44,8 +37,7 @@ public class EattingEnemy : MonoBehaviour
         if (other.gameObject.CompareTag("BeginGiantBattle"))
         {
             Stop = true;
-            EnemySpawner.SetActive(true);
-            RunningSectionOfFight.SetActive(true);
+            Destroy(RunningSectionOfFight.gameObject);
 
             
         }

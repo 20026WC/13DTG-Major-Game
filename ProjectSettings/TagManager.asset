@@ -17,6 +17,9 @@ TagManager:
   - BeginGiantBattle
   - BossBattleLevel
   - Next Level
+  - Exit
+  - Death
+  - Ending
   layers:
   - Default
   - TransparentFX

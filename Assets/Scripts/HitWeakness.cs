@@ -48,28 +48,21 @@ public class HitWeakness : MonoBehaviour
         if (other.gameObject.CompareTag("Weapon"))
         {
             // This disables the enemies NotHitState. The enemies NoHitSpace is the enemies' triggers which damage the Player. 
-            NotHitState.SetActive(false);
-            animator.SetBool("WeaknessHit", true);
-            PlayerHitEnemyWeakness = true;
 
-
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-
-        if (other.gameObject.CompareTag("Weapon"))
-        {
-            // This ends the enemies weakenss hit animation. 
-            animator.SetBool("WeaknessHit", false);
+            death.Damage(10);
             StartCoroutine(CountdownRoutine());
+
+
         }
     }
 
     IEnumerator CountdownRoutine()
     {
+        NotHitState.SetActive(false);
+        animator.SetBool("WeaknessHit", true);
+        PlayerHitEnemyWeakness = true;
         yield return new WaitForSeconds(2);
+        animator.SetBool("WeaknessHit", false);
         // This reengages the enemies triggers which damage the Player. 
         NotHitState.SetActive(true);
         PlayerHitEnemyWeakness = false;

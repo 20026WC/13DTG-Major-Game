@@ -29,6 +29,9 @@ public class NextLevel : MonoBehaviour
         {
             AfterMathOfbATTLE();
             StartNextLevel = true;
+            Player.StartNewLevel = false;
+            RandomisedScript.DefeatedBosses += 1;
+
         }
     }
 

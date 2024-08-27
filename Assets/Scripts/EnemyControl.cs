@@ -12,7 +12,7 @@ public class EnemyControl : MonoBehaviour
     public GameObject Cube;
     private PlayerMovement PlayerMovement;
     private SpawnManager Spawner;
-    private SkillTree SP;
+
     private float powerupStrength = 20000000f;
     public bool Knockback;
 
@@ -26,7 +26,7 @@ public class EnemyControl : MonoBehaviour
         player = GameObject.Find("Player");
         PlayerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
 
-        SP = GameObject.Find("Skill Tree").GetComponent<SkillTree>();
+        
 
         Spawner = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         rend = GetComponent<SpriteRenderer>();
@@ -43,7 +43,6 @@ public class EnemyControl : MonoBehaviour
         if (enemyHealth < 0)
         {
             Destroy(gameObject);
-            SP.SkillPoints += 1;
 
         }
 
@@ -86,6 +85,13 @@ public class EnemyControl : MonoBehaviour
             // Gets destroyed if it touches the player's weapon.
             Damage(20);
             StartCoroutine(CountdownRoutine());
+
+        }
+
+        if (other.gameObject.CompareTag("Death"))
+        {
+            // Gets destroyed if it touches the player's weapon.
+            Destroy(gameObject);
 
         }
     }

@@ -13,6 +13,7 @@ public class RandomisedScript : MonoBehaviour
     public bool BeginAboss;
 
     public int DefeatedStage = 0;
+    public int DefeatedBosses = 0;
     private SkillTree SP;
 
     private PlayerMovement PlayerMovement;
@@ -37,7 +38,7 @@ public class RandomisedScript : MonoBehaviour
 
     public void RandomNumber()
     {
-        if (!BeginAboss)
+        if (!BeginAboss && !PlayerMovement.BeginFinal)
         {
             int ran = UnityEngine.Random.Range(1, 4);
             TeleportPlayer = true;
@@ -63,7 +64,7 @@ public class RandomisedScript : MonoBehaviour
                 level4.SetActive(false);
             }
 
-            if (DefeatedStage == 5)
+            if (DefeatedStage >= 5)
             {
                 SM.bossSpawned = false;
                 level1.SetActive(false);
@@ -78,5 +79,15 @@ public class RandomisedScript : MonoBehaviour
             SP.SkillPoints += 1;
         }
 
+        if (PlayerMovement.BeginFinal)
+        {
+            SM.bossSpawned = false;
+            level1.SetActive(false);
+            level2.SetActive(false);
+            level3.SetActive(false);
+            level4.SetActive(false);;
+        }
+
     }
+
 }

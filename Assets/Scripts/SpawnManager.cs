@@ -28,7 +28,7 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
-        if (PlayerMovement.AcentIsActive == true)
+        if (PlayerMovement.AcentIsActive && !PlayerMovement.BeginFinal)
         {
             enemyCount = FindObjectsOfType<EnemyControl>().Length;
             BossCount = GameObject.FindGameObjectsWithTag("BossBattleLevel").Length;

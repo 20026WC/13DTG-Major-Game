@@ -18,22 +18,27 @@ public class BossDamage : MonoBehaviour
     {
         if (enemyHealth < 0)
         {
-            Destroy(gameObject);
-            BossisDead = true;
+            Death();
 
         }
     }
-    void Damage(int damage)
+    public void Damage(int damage)
     {
         //This is the code minuses damage from the player's health. 
         enemyHealth -= damage / Player.levelDifficulty * Player.AttackPower;
+    }
+
+    private void Death()
+    {
+        BossisDead = true;
+        Destroy(gameObject);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Weapon"))
         {
             // Gets destroyed if it touches the player's weapon.
-            Damage(10);
+            Damage(20);
 
         }
     }
