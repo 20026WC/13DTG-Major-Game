@@ -5,8 +5,15 @@ using UnityEngine;
 public class Dialouge : MonoBehaviour
 {
     private PlayerMovement Player;
+    private Exit exit;
+
+
     public bool PlayerHasReadFirstMessage;
     public bool PlayerHasReadLastMessage;
+    public bool PlayerHasReadFinalMessage;
+    public bool BeginFinalBossFight = false;
+    public bool GameHasEnded = false;
+
     public GameObject PlayersFirstSpawn;
 
     public GameObject Textbox;
@@ -25,14 +32,16 @@ public class Dialouge : MonoBehaviour
     public GameObject LastFourthText;
     public GameObject LastFifthText;
     public GameObject LastSixthText;
-    public GameObject LastSeventhText;
-    public GameObject LasEighthText;
 
-    public GameObject FinalBoss;
+    public GameObject FinalFirstText;
+    public GameObject FinalSecondText;
+    public GameObject FinalThirdText;
+
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        exit = GameObject.Find("Exit").GetComponent<Exit>();
         PlayerHasReadFirstMessage = false;
         PlayerHasReadLastMessage = false;
     }
@@ -46,7 +55,11 @@ public class Dialouge : MonoBehaviour
         }  
         if (Player.NearingEnding && !PlayerHasReadLastMessage)
         {
-            StartCoroutine(EndingOfGame());
+            StartCoroutine(EndingOfGamePart1());
+        }
+        if (Player.EndGame && !PlayerHasReadFinalMessage)
+        {
+            StartCoroutine(EndingOfGamePart2());
         }
     }
 
@@ -75,7 +88,7 @@ public class Dialouge : MonoBehaviour
 
 
     }    
-    IEnumerator EndingOfGame()
+    IEnumerator EndingOfGamePart1()
     {
         Textbox.SetActive(true);
         PlayerHasReadLastMessage = true;
@@ -98,15 +111,29 @@ public class Dialouge : MonoBehaviour
         LastSixthText.SetActive(true);
         yield return new WaitForSeconds(1);
         LastSixthText.SetActive(false);
-        LastSeventhText.SetActive(true);
-        yield return new WaitForSeconds(1);
-        LastSeventhText.SetActive(false);
-        LasEighthText.SetActive(true);
-        yield return new WaitForSeconds(1);
-        LasEighthText.SetActive(false);
         Player.PlayerPaused = false;
         Textbox.SetActive(false);
-        FinalBoss.SetActive(true);
+        BeginFinalBossFight = true;
+    }   
+    
+    IEnumerator EndingOfGamePart2()
+    {
+        Textbox.SetActive(true);
+        PlayerHasReadFinalMessage = true;
+        Player.PlayerPaused = true;
+        FinalFirstText.SetActive(true);
+        yield return new WaitForSeconds(2);
+        FinalFirstText.SetActive(false);
+        FinalSecondText.SetActive(true);
+        yield return new WaitForSeconds(2);
+        FinalSecondText.SetActive(false);
+        FinalThirdText.SetActive(true);
+        yield return new WaitForSeconds(5);
+        FinalThirdText.SetActive(false);
+        Textbox.SetActive(false);
+        GameHasEnded = true;
+        yield return new WaitForSeconds(2);
+        exit.RestartGame();
 
 
     }

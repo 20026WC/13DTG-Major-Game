@@ -81,11 +81,13 @@ public class RandomisedScript : MonoBehaviour
 
         if (PlayerMovement.BeginFinal)
         {
+            TeleportPlayer = true;
             SM.bossSpawned = false;
             level1.SetActive(false);
             level2.SetActive(false);
             level3.SetActive(false);
-            level4.SetActive(false);;
+            level4.SetActive(false);
+            TeleportPlayer = false;
         }
 
     }

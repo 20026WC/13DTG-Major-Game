@@ -20,6 +20,7 @@ TagManager:
   - Exit
   - Death
   - Ending
+  - The End
   layers:
   - Default
   - TransparentFX

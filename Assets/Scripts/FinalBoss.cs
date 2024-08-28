@@ -11,15 +11,21 @@ public class FinalBoss : MonoBehaviour
 
 
     public float speed = 5f;
-    public Transform Player;
+    private Transform Player;
+    private GameObject Spawner;
+    private GameObject Barrier;
     public Animator animator;
 
     public bool isRunning;
     public bool Paused;
+    public bool GameisComplete = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        Barrier = GameObject.Find("Barrier");
+        Spawner = GameObject.Find("FinalBossSpawn");
+        Player = GameObject.Find("Player").transform;
     }
     // Update is called once per frame
     void Update()
@@ -57,9 +63,10 @@ public class FinalBoss : MonoBehaviour
             animator.SetBool("PlayerAttacking ", false);
         }
 
-
         if (EnemyHealth < 0)
         {
+            Destroy(Barrier.gameObject);
+            Destroy(Spawner.gameObject);
             Destroy(gameObject);
         }
     }

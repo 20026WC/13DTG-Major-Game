@@ -61,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
     public bool StartNewLevel = false;
     public bool BeginFinal = false;
     public bool NearingEnding = false;
+    public bool EndGame = false;
 
 
 
@@ -209,6 +210,8 @@ public class PlayerMovement : MonoBehaviour
     {
         
         currentHealth -= maxHealth;
+        RandomisedScript.DefeatedStage = 0;
+        RandomisedScript.DefeatedBosses = 0;
         gameObject.SetActive(false);
         basespawn.SetActive(true);
         GameOver.SetActive(true);
@@ -312,6 +315,11 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("Ending"))
         {
             NearingEnding = true;
+        }        
+        
+        if (other.gameObject.CompareTag("The End"))
+        {
+            EndGame = true;
         }
 
         if (other.gameObject.CompareTag("Death"))
