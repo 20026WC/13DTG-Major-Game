@@ -12,7 +12,9 @@ public class SkillTree : MonoBehaviour
     private PlayerMovement Player;
 
     public int[] SkillLevels;
+    // List of the skill caps of all of the skill tree skills. E.g. Skill 2 has a upgrade limit of 5
     public int[] SkillCaps;
+    // List of SkillNames.
     public string[] SkillNames;
     public string[] SkillDescriptions;
 
@@ -22,15 +24,21 @@ public class SkillTree : MonoBehaviour
     public List<GameObject> ConnectorList;
     public GameObject ConnectorHolder;
 
+    // This is the skillPoints that the Player has. 
     public int SkillPoints;
 
     private void Start()
     {
+        // begins the player with 2 skill points. 
         SkillPoints = 2;
+        // This establishes that there are 6 skills. 
         SkillLevels = new int[6];
+        // List of the skill caps of all of the skill tree skills. E.g. Skill 2 has a upgrade limit of 5
         SkillCaps = new[] { 1, 5, 10, 10, 1, 1 };
 
+        // List of SkillNames.
         SkillNames = new[] { "First Upgrade", "Speed Upgrade", "Health Upgrade", "Attack Upgrade", "Health Upgrade", "Health Upgrade", };
+        // list of skill descriptions.
         SkillDescriptions = new[]
         {
             "Unlock Skill Tree",

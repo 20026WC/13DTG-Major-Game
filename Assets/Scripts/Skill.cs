@@ -12,6 +12,7 @@ public class Skill : MonoBehaviour
     public TMP_Text TitleText;
     public TMP_Text DescriptionText;
 
+    // This is a list of all the Connected Skills. 
     public int[] ConnectedSkills;
 
     public void UpdateUI()
@@ -29,6 +30,7 @@ public class Skill : MonoBehaviour
         }
     }
 
+    // Code to purchase skills with skill points in the skill tree. 
     public void Buy()
     {
         if (skillTree.SkillPoints < 1 || skillTree.SkillLevels[id] >= skillTree.SkillCaps[id]) return;

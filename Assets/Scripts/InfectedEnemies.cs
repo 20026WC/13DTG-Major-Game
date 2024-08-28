@@ -8,7 +8,7 @@ public class InfectedEnemies : MonoBehaviour
     Rigidbody2D enemyRb;
     public float speed = 50;
     public float enemyHealth = 5;
-    private float powerupStrength = 20000000f;
+    private float powerupStrength = 20000000;
 
 
     private PlayerMovement PlayerMovement;
@@ -17,6 +17,7 @@ public class InfectedEnemies : MonoBehaviour
 
     public bool Knockback;
     public bool isRunning;
+    public bool isFlipped = false;
 
     public Animator animator;
     private Transform Player;
@@ -45,6 +46,7 @@ public class InfectedEnemies : MonoBehaviour
         {
             Vector2 lookDirection = (Player.transform.position - transform.position).normalized;
             enemyRb.AddForce(lookDirection * speed);
+            LookAtPlayer();
             animator.SetBool("Walking", true);
         }
 
@@ -75,12 +77,6 @@ public class InfectedEnemies : MonoBehaviour
             death();
         }
 
-
-        if (transform.position.y < -40)
-        {
-            death();
-        }
-
         if (Spawner.PlayerIsDead == true)
         {
             death();
@@ -90,6 +86,26 @@ public class InfectedEnemies : MonoBehaviour
 
     }
 
+    public void LookAtPlayer()
+    {
+        // Check if the enemy is on the left side of the player and should face right
+        if (transform.position.x < Player.transform.position.x && !isFlipped)
+        {
+            Flip();
+        }
+        // Check if the enemy is on the right side of the player and should face left
+        else if (transform.position.x > Player.transform.position.x && isFlipped)
+        {
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        // Flip the character by rotating 180 degrees on the Y axis
+        transform.Rotate(0f, 180f, 0f);
+        isFlipped = !isFlipped;  // Toggle the flipped state
+    }
 
     void Damage(int damage)
     {

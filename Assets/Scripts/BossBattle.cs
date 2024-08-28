@@ -18,7 +18,9 @@ public class BossBattle : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        // This searches the game for an player gameobject. This is then assigned to the private GameObject player.
         player = GameObject.Find("Player");
+        // The First Boss GameObject has the HitWeakness script on it. 
         weakness = GameObject.Find("First Boss").GetComponent<HitWeakness>();
     }
 
@@ -27,6 +29,8 @@ public class BossBattle : MonoBehaviour
     {
 
         Physics2D.gravity = new Vector2(0, -9.8f);
+        // Gets the weakness script and sees of PlayerHitEnemyWeakness is false.
+        // When the player hits the enemies weakness the enemy is meant to be frozen for a few seconds. 
         if (weakness.PlayerHitEnemyWeakness == false)
         {
             Vector2 target = new Vector2(player.transform.position.x, rb.position.y);
@@ -45,7 +49,7 @@ public class BossBattle : MonoBehaviour
         }
         // Check if the enemy is on the right side of the player and should face left
         else if (transform.position.x < player.transform.position.x && isFlipped)
-        {
+        {   // Calls the flip function and rotates the enemy. 
             Flip();
         }
     }

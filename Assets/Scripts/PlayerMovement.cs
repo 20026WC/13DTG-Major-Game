@@ -56,6 +56,9 @@ public class PlayerMovement : MonoBehaviour
     public bool PlayerPaused;
     public bool beginShopping;
     public bool SelectDiff;
+
+    public bool unlockedLevelEarnHealth = false;
+    public bool unlockedBossesEarnPlayerHealth = false;
     public bool lookingleft = true;
     public bool isOnGround = true;
     public bool StartNewLevel = false;
@@ -91,10 +94,12 @@ public class PlayerMovement : MonoBehaviour
                 transform.Translate(Vector2.right * horizontalInput * Time.deltaTime * speed, Space.World);
                 if (horizontalInput == 0)
                 {
+                    // This for when the player stops moving. This stops the Player's walking animation. 
                     animator.SetBool("Walking", false);
                 }
                 else
                 {
+                    // this sets the player's walking animation to true. Showing the player is walking. 
                     animator.SetBool("Walking", true);
                 }
 
@@ -105,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
             {
                 playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                // Stops the player from jumping mutiple times. 
                 isOnGround = false;
                 animator.SetBool("PlayerJumping", true);
 
@@ -136,7 +142,7 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(PlayerAttackCountdownRoutine());
 
                 if (!isOnGround)
-                {
+                {   // If the player is in the air they can do a fast downwards attack. 
                     playerRb.AddForce(Vector2.down * jumpForce * 2, ForceMode2D.Impulse);                
                     StartCoroutine(PlayerAirAttackCountdownRoutine());
 
@@ -164,18 +170,15 @@ public class PlayerMovement : MonoBehaviour
             if (currentHealth <= 0)
             {
                 Death();
+                // stops the defenind animation
                 animator.SetBool("Defending", false);
 
             }
             else
             {
+                // This sets the respawn buttons to be deactive. 
                 GameOver.SetActive(false);
                 NewAdventureButton.gameObject.SetActive(false);
-            }
-
-            if (transform.position.y < -70)
-            {
-                Death();
             }
 
 
@@ -183,6 +186,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 Spawned = true;
                 PlayerSpawnPoint();
+                if (unlockedLevelEarnHealth)
+                {
+                    // If the player has less health then the max health they can gain a samll bit of health if they bought the upgrade from the tree. 
+                    if(currentHealth < maxHealth)
+                    {
+                        currentHealth += 20;
+                    }
+                }
                 
             }
         }
@@ -190,6 +201,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    // damage function
     void Damage(int damage)
     {
         if (NODamage == true)
@@ -198,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (NODamage == false)
         {
+            // the player takes damage if they did not defend. 
             //This is the code minuses damage from the player's health. 
             currentHealth -= damage * levelDifficulty;
         }
@@ -205,49 +218,69 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
-
+    // this is the death fucntion.
     public void Death()
     {
-        
+        //  This makes sure the health is 0.
         currentHealth -= maxHealth;
+        // This sets both the degfetaed stages and defeated bosses to 0. 
         RandomisedScript.DefeatedStage = 0;
         RandomisedScript.DefeatedBosses = 0;
+        // indecates the player is deads by turnign it's model invisible. 
         gameObject.SetActive(false);
+        // This turns the base of the tree active so that the player cna teleport there.
         basespawn.SetActive(true);
+        // This gets all of the game over assest ready. E.g. Quit game and respawn.
         GameOver.SetActive(true);
         NewAdventureButton.gameObject.SetActive(true);
         animator.SetBool("Respawn", true);
 
     }
+
+    // This gets the player ready for ther beginign of the game. 
     public void startGame()
     {
+        // calls the player spawnpoint function.
         PlayerSpawnPoint();
+        // Turns the respawn animation to false. 
         animator.SetBool("Respawn", false);
+        // Resets the players gravity.
         Physics.gravity *= gravityModifier;
+        //Sets the players health to the player's max health.
         currentHealth = maxHealth;
+        // Sets the health bar to display with all heath present.
         healthBar.SetMaxHealth(maxHealth);
         currentHealth = maxHealth;
 
+        // sets the game to active.
         GameIsActive = true;
+        // Sets the player to not be frozen in case they somhwo got paused.
         PlayerPaused = false;
+        // indicates that the player has been spawned so don't try to spawn again.
         Spawned = false;
+        // says that the player isn't ready for combat yet.
         AcentIsActive = false;
+        // Makes the base of the tree ready for the player to teleport to. 
         PlayersBaseSpawnPoint.SetActive(true);
 
+        // Mkaes the health bar visble.
         TheHeathBar.SetActive(true);
         gameObject.SetActive(true);
         basespawn.SetActive(true);
+        // Makes the title screen visible. 
         TitleScreen.gameObject.SetActive(false);
 
     }
 
     public void ShoppingforUpgrades()
     {
+        // Allows the player acess the skill tree menu only if they aren't currently shopping.
         if (beginShopping && !Shopping)
         {
             Shopping = true;
             PlayerPaused = true;
         }
+        // This si the code for when the player is not acessing the skill tree menu. 
         else
         {
             Shopping = false;
@@ -377,7 +410,7 @@ public class PlayerMovement : MonoBehaviour
         // Only upgrades Attack if player has upgraded attack less then 10 times. 
         if (Attackupgraded <= 9 && SP.SkillPoints >= 1)
         {
-            AttackPower += 10;
+            AttackPower += 1;
             Attackupgraded += 1;
         }
 
@@ -394,6 +427,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+    // Skill tree upgrade
+    public void PlayerBoughtUpgradeLevelHealth()
+    {
+        unlockedLevelEarnHealth = true;
+    }
+
+    // Skill tree upgrade
+    public void PlayergetsHealthfordefeatingBosses()
+    {
+        unlockedBossesEarnPlayerHealth = true;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

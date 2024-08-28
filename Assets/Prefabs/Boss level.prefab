@@ -2782,7 +2782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fd0abd6c83e7443931303439878f06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHealth: 100
+  enemyHealth: 1000
   BossisDead: 0
 --- !u!1 &7563139949104941012
 GameObject:

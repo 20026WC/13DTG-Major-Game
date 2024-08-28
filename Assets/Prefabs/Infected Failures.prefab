@@ -1451,7 +1451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 120
-  enemyHealth: 20
+  enemyHealth: 40
   Knockback: 0
   isRunning: 0
   animator: {fileID: 8537848390514604505}
